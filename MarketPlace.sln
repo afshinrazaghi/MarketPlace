@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPalce.Application", "MarketPalce.Application\MarketPalce.Application.csproj", "{EBDB5696-78D2-44CB-8D55-FBFA4420AA2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.Application", "MarketPalce.Application\MarketPlace.Application.csproj", "{EBDB5696-78D2-44CB-8D55-FBFA4420AA2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlace.DataLayer", "MarketPalce.DataLayer\MarketPlace.DataLayer.csproj", "{AC76122E-133A-4CFF-BC10-DCB36AA1AE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.DataLayer", "MarketPalce.DataLayer\MarketPlace.DataLayer.csproj", "{AC76122E-133A-4CFF-BC10-DCB36AA1AE20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlace.Web", "MarketPlace.Web\MarketPlace.Web.csproj", "{B1D372F0-9F7A-4133-9A2F-67F9BF406DDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.Web", "MarketPlace.Web\MarketPlace.Web.csproj", "{B1D372F0-9F7A-4133-9A2F-67F9BF406DDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

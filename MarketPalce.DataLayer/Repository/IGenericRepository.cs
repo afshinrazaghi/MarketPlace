@@ -17,5 +17,6 @@ namespace MarketPlace.DataLayer.Repository
         public Task DeleteEntity(long entityId);
         public void DeletePermanent(TEntity entity);
         public Task DeletePermanent(long entityId);
+        public Task SaveChanges();
     }
 }

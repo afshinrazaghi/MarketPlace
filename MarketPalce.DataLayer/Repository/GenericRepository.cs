@@ -72,5 +72,10 @@ namespace MarketPlace.DataLayer.Repository
         {
             return await _dbSet.SingleOrDefaultAsync(entity => entity.Id == id);
         }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
