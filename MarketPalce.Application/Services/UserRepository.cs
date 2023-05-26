@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.Application.Services
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         #region Constructor
         private readonly IGenericRepository<User> _userRepository;
