@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.DataLayer.Entities.Common
 {
-    public class BaseEntity<TEntity>
+    public class BaseEntity
     {
-        public TEntity Id { get; set; }
+        public long Id { get; set; }
+        public bool IsDelete { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
     }
 }

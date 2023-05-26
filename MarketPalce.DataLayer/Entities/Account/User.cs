@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.DataLayer.Entities.Account
 {
-    public class User : BaseEntity<long>
+    public class User : BaseEntity
     {
         #region properties
 
