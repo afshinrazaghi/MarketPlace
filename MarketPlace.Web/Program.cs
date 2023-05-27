@@ -1,5 +1,7 @@
 using MarketPlace.Application.Services;
+using MarketPlace.DataLayer.Context;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddDbContext<MarketPlaceDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MarketPlaceConnection")
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
