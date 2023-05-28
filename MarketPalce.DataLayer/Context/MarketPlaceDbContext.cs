@@ -10,6 +10,10 @@ namespace MarketPlace.DataLayer.Context
 {
     public class MarketPlaceDbContext : DbContext
     {
+        public MarketPlaceDbContext(DbContextOptions<MarketPlaceDbContext> options)
+            :base(options)
+        {
+        }
         #region account
         public DbSet<User> Users { get; set; }
         #endregion
@@ -21,6 +25,8 @@ namespace MarketPlace.DataLayer.Context
             {
                 relation.DeleteBehavior = DeleteBehavior.Cascade;
             }
+
+            base.OnModelCreating(modelBuilder);
         }
         #endregion
     }
