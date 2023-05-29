@@ -12,52 +12,52 @@ namespace MarketPlace.DataLayer.Entities.Account
     public class User : BaseEntity
     {
         #region properties
-        [Display(Name = "Email")]
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(200, ErrorMessage = "{0} cannot be more that {1} characters")]
-        [EmailAddress(ErrorMessage = "{0} is invalid")]
+        [Display(Name = "ایمیل")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
+        [EmailAddress(ErrorMessage = "{0} نام معتبر است")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(100, ErrorMessage = "{0} cannot be more that {1} characters")]
+		[Required(ErrorMessage = "{0} را وارد کنید")]
+		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string EmailActiveCode { get; set; }
 
-        [Display(Name = "Email Active/InActive")]
+        [Display(Name = "ایمیل فعال / غیر فعال")]
         public bool IsEmailActive { get; set; }
 
-        [Display(Name = "Mobile")]
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(50, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Display(Name = "تلفن همراه")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(50, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Mobile { get; set; }
 
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(20, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(20, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string MobileActiveCode { get; set; }
 
-        [Display(Name = "Email Active/InActive")]
+        [Display(Name = "تلفن همراه فعال/ غیر فعال")]
         public bool IsMobileActive { get; set; }
 
-        [Display(Name = "Password")]
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(200, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Display(Name = "کلمه عبور")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Password { get; set; }
 
-        [Display(Name = "First Name")]
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(200, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Display(Name = "نام")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "{0} is mandatory")]
-        [MaxLength(200, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Display(Name = "نام خانوادگی")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string LastName { get; set; }
 
-        [Display(Name = "Avatar")]
-        [MaxLength(200, ErrorMessage = "{0} cannot be more that {1} characters")]
+        [Display(Name = "تصویر آواتار")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Avatar { get; set; }
 
-        [Display(Name = "Blocked/Not Blocked")]
+        [Display(Name = "بلاک شده / بلاک نشدده")]
         public bool IsBlocked { get; set; }
         #endregion
 

@@ -9,7 +9,7 @@ namespace MarketPlace.DataLayer.Repository
 {
     public interface IGenericRepository<TEntity> : IAsyncDisposable where TEntity : BaseEntity
     {
-        public IQueryable<TEntity> GetAll();
+        public IQueryable<TEntity> GetQuery();
         public Task<TEntity?> GetEntityById(long id);
         public Task AddEntity(TEntity entity);
         void EditEntity(TEntity entity);
