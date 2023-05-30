@@ -19,5 +19,14 @@ namespace MarketPlace.DataLayer.DTOs
         [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
+    }
+
+    public enum LoginUserResult
+    {
+        Success,
+        NotFound,
+        NotActivated
     }
 }

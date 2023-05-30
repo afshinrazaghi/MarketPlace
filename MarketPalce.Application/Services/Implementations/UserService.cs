@@ -51,6 +51,20 @@ namespace MarketPlace.Application.Services.Implementations
         {
             return await _userRepository.GetQuery().AnyAsync(u => u.Mobile == mobileNumber);
         }
+
+        public async Task<LoginUserResult> LoginUser(LoginUserDTO model)
+        {
+            var user = await _userRepository.GetQuery().SingleOrDefaultAsync(u => u.Mobile == model.Mobile);
+            if (user == null) return LoginUserResult.NotFound;
+            if (!user.IsMobileActive) return LoginUserResult.NotActivated;
+            if (!_passwordHelper.VerifyPassword(model.Password, user.Password)) return LoginUserResult.NotFound;
+            return LoginUserResult.Success;
+        }
+
+        public async Task<User?> GetUserByMobile(string mobileNumber)
+        {
+            return await _userRepository.GetQuery().SingleOrDefaultAsync(u => u.Mobile == mobileNumber);
+        }
         #endregion
 
         #region dispose
@@ -58,6 +72,8 @@ namespace MarketPlace.Application.Services.Implementations
         {
             await _userRepository.DisposeAsync();
         }
+
+
         #endregion
     }
 }

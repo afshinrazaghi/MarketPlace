@@ -1,7 +1,59 @@
-﻿
+﻿@model MarketPlace.DataLayer.DTOs.LoginUserDTO;
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "ورود به حساب کاربری";
 }
 
-<h1>Login</h1>
+@section scripts{
+    <partial name="_JqueryValidators" />
+}
+
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>ورود به حساب کابری</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- customer login start -->
+<div class="customer_login mt-60">
+    <div class="container">
+        <div class="row">
+            <!--login area start-->
+            <div class="col-lg-6 col-md-6 offset-lg-3 offset-md-3">
+                <div class="account_form register">
+                    <h2>ورود به حساب کاربری</h2>
+                    <form method="post" asp-controller="Account" asp-action="login">
+                        <p>
+                            <label>تلفن همراه <span>*</span></label>
+                            <input asp-for="Mobile" type="text">
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </p>
+                        <p>
+                            <label>رمز عبور <span>*</span></label>
+                            <input asp-for="Password" type="password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </p>
+                        <div class="login_submit">
+                            <button type="submit">ورود</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- customer login end -->
+        </div>
+    </div>
+</div>
+
+
+
 

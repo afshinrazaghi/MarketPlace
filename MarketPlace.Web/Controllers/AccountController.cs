@@ -1,7 +1,10 @@
 ﻿using MarketPlace.Application.Services;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MarketPlace.Web.Controllers
 {
@@ -18,6 +21,8 @@ namespace MarketPlace.Web.Controllers
         [HttpGet("register")]
         public IActionResult Register()
         {
+            if (User.Identity!.IsAuthenticated)
+                return Redirect("/");
             return View();
         }
 
@@ -48,6 +53,8 @@ namespace MarketPlace.Web.Controllers
         [HttpGet("login")]
         public IActionResult Login()
         {
+            if (User.Identity!.IsAuthenticated)
+                return Redirect("/");
             return View();
         }
 
@@ -56,7 +63,37 @@ namespace MarketPlace.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var loginResult = await _userService.LoginUser(model);
+                switch (loginResult)
+                {
+                    case LoginUserResult.NotFound:
+                        TempData[ErrorMessage] = "کاربر یافت نشد";
+                        break;
+                    case LoginUserResult.NotActivated:
+                        TempData[WarningMessage] = "حساب کاربری شما فعال نشده است";
+                        break;
+                    case LoginUserResult.Success:
 
+                        var user = (await _userService.GetUserByMobile(model.Mobile))!;
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.GivenName, user.FirstName + " "+ user.LastName),
+                            new Claim(ClaimTypes.Name, user.Mobile),
+                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        };
+
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+                        var properties = new AuthenticationProperties()
+                        {
+                            IsPersistent = model.RememberMe
+                        };
+
+                        await HttpContext.SignInAsync(principal, properties);
+                        TempData[SuccessMessage] = "عملیات ورود با موفقیت انجام شد";
+                        return Redirect("/");
+
+                }
             }
             return View(model);
         }
