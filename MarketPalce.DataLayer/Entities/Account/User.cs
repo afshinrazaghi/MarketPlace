@@ -13,11 +13,10 @@ namespace MarketPlace.DataLayer.Entities.Account
     {
         #region properties
         [Display(Name = "ایمیل")]
-        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         [EmailAddress(ErrorMessage = "{0} نام معتبر است")]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
 		[Required(ErrorMessage = "{0} را وارد کنید")]
 		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
@@ -55,7 +54,7 @@ namespace MarketPlace.DataLayer.Entities.Account
 
         [Display(Name = "تصویر آواتار")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
-        public string Avatar { get; set; }
+        public string? Avatar { get; set; }
 
         [Display(Name = "بلاک شده / بلاک نشدده")]
         public bool IsBlocked { get; set; }

@@ -18,10 +18,6 @@ namespace MarketPlace.Web.Controllers
         [HttpGet("register")]
         public IActionResult Register()
         {
-            TempData["SuccessMessage"] = "پیام تستی";
-            TempData["ErrorMessage"] = "پیام تستی";
-            TempData["InfoMessage"] = "پیام تستی";
-            TempData["WarningMessage"] = "پیام تستی";
             return View();
         }
 
