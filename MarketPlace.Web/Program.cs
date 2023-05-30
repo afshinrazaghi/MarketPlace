@@ -3,6 +3,7 @@ using MarketPlace.Application.Services.Implementations;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.Context;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -25,6 +26,22 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 #region config database
 builder.Services.AddDbContext<MarketPlaceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MarketPlaceConnection")));
 #endregion
+
+#region authentication
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.LoginPath = "/login";
+    options.LogoutPath = "/log-out";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+});
+
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +56,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

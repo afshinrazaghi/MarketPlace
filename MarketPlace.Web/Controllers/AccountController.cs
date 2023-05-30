@@ -21,7 +21,7 @@ namespace MarketPlace.Web.Controllers
             return View();
         }
 
-        [HttpPost("register")]
+        [HttpPost("register"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserDTO model)
         {
             if (ModelState.IsValid)
@@ -49,6 +49,16 @@ namespace MarketPlace.Web.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginUserDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View(model);
         }
         #endregion
     }
