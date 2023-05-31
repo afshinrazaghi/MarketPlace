@@ -1,10 +1,11 @@
-﻿@model MarketPlace.DataLayer.DTOs.LoginUserDTO;
+﻿@model MarketPlace.DataLayer.DTOs.Account.LoginUserDTO;
 @{
     ViewData["Title"] = "ورود به حساب کاربری";
 }
 
 @section scripts{
     <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts" />
 }
 
 
@@ -33,6 +34,7 @@
                 <div class="account_form register">
                     <h2>ورود به حساب کاربری</h2>
                     <form method="post" asp-controller="Account" asp-action="login">
+                        <partial name="_CaptchaInput" />
                         <p>
                             <label>تلفن همراه <span>*</span></label>
                             <input asp-for="Mobile" type="text">

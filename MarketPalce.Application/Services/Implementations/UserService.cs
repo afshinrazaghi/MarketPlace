@@ -1,5 +1,5 @@
 ﻿using MarketPlace.Application.Services.Interfaces;
-using MarketPlace.DataLayer.DTOs;
+using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;

@@ -1,10 +1,11 @@
-﻿@model MarketPlace.DataLayer.DTOs.RegisterUserDTO;
+﻿@model MarketPlace.DataLayer.DTOs.Account.RegisterUserDTO;
 @{
     ViewData["Title"] = "ثبت نام";
 }
 
 @section scripts{
     <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts" />
 }
 
 <!--breadcrumbs area start-->
@@ -32,6 +33,7 @@
                 <div class="account_form register">
                     <h2>ثبت نام</h2>
                     <form method="post" asp-controller="Account" asp-action="register">
+                        <partial name="_CaptchaInput" />
                         <p>
                             <label>نام <span>*</span></label>
                             <input asp-for="FirstName" type="text">

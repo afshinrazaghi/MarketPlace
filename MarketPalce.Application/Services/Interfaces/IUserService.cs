@@ -1,4 +1,4 @@
-﻿using MarketPlace.DataLayer.DTOs;
+﻿using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
 using System;
 using System.Collections.Generic;
