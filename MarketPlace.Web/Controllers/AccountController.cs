@@ -67,7 +67,7 @@ namespace MarketPlace.Web.Controllers
             return View();
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserDTO model)
         {
             if (!await _captchaValidator.IsCaptchaPassedAsync(model.Captcha))
@@ -120,6 +120,38 @@ namespace MarketPlace.Web.Controllers
         {
             await HttpContext.SignOutAsync();
             return Redirect("/");
+        }
+        #endregion
+
+        #region forget-password
+        [HttpGet("forgot-pass")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("forgot-pass"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDTO model)
+        {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(model.Captcha))
+            {
+                TempData[ErrorMessage] = "کد کپچا تایید نشد";
+                return View(model);
+            }
+
+            var res = await _userService.RecoverPassword(model);
+            switch (res)
+            {
+                case ForgotPasswordResult.NotFound:
+                    TempData[WarningMessage] = "کاربر یافت نشد";
+                    break;
+                case ForgotPasswordResult.Success:
+                    TempData[SuccessMessage] = "کلمه عبور جدید برای شما ارسال شد";
+                    TempData[InfoMessage] = "لطفا پس از ورود به حساب کاربری، کلمه عبور خود را تغییر دهید";
+                    return Redirect("/login");
+            }
+
+            return View(model);
         }
         #endregion
     }

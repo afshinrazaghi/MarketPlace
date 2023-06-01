@@ -18,6 +18,8 @@ namespace MarketPlace.Application.Services.Interfaces
         public Task<LoginUserResult> LoginUser(LoginUserDTO model);
 
         public Task<User?> GetUserByMobile(string mobileNumber);
+
+        public Task<ForgotPasswordResult> RecoverPassword(ForgotPasswordDTO model);
         #endregion
     }
 }
