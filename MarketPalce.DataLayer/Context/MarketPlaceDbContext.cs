@@ -1,4 +1,5 @@
 ﻿using MarketPlace.DataLayer.Entities.Account;
+using MarketPlace.DataLayer.Entities.Site;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,15 @@ namespace MarketPlace.DataLayer.Context
     public class MarketPlaceDbContext : DbContext
     {
         public MarketPlaceDbContext(DbContextOptions<MarketPlaceDbContext> options)
-            :base(options)
+            : base(options)
         {
         }
         #region account
         public DbSet<User> Users { get; set; }
+        #endregion
+
+        #region siteSetting
+        public DbSet<SiteSetting> SiteSettings { get; set; }
         #endregion
 
         #region on model creating
