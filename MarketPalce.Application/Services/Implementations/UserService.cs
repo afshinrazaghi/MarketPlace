@@ -13,14 +13,16 @@ namespace MarketPlace.Application.Services.Implementations
 {
     public class UserService : IUserService
     {
-        private readonly IPasswordHelper _passwordHelper;
         #region Constructor
+        private readonly IPasswordHelper _passwordHelper;
         private readonly IGenericRepository<User> _userRepository;
+        private readonly ISmsService _smsService;
 
-        public UserService(IGenericRepository<User> userRepository, IPasswordHelper passwordHelper)
+        public UserService(IGenericRepository<User> userRepository, IPasswordHelper passwordHelper, ISmsService smsService)
         {
             _userRepository = userRepository;
             _passwordHelper = passwordHelper;
+            _smsService = smsService;
         }
         #endregion
 
@@ -40,6 +42,7 @@ namespace MarketPlace.Application.Services.Implementations
                 };
 
                 await _userRepository.AddEntity(user);
+                _smsService.SendSms(user.Mobile, user.MobileActiveCode);
                 await _userRepository.SaveChanges();
                 return RegisterUserResult.Success;
             }
@@ -84,6 +87,25 @@ namespace MarketPlace.Application.Services.Implementations
             //send new password to user mobile
             await _userRepository.SaveChanges();
             return ForgotPasswordResult.Success;
+        }
+
+        public async Task<bool> ActivateMobile(ActivateMobileDTO model)
+        {
+            var user = await _userRepository.GetQuery().SingleOrDefaultAsync(u => u.Mobile == model.Mobile);
+            if (user is not null)
+            {
+                if (user.MobileActiveCode == model.MobileActiveCode)
+                {
+                    user.IsMobileActive = true;
+                    user.MobileActiveCode = new Random().Next(10000, 99999).ToString();
+                    _userRepository.EditEntity(user);
+                    await _userRepository.SaveChanges();
+                    return true;
+                }
+
+            }
+
+            return false;
         }
 
 

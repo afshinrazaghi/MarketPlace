@@ -14,6 +14,7 @@ namespace MarketPlace.Web.Controllers
         private readonly IUserService _userService;
         private readonly ICaptchaValidator _captchaValidator;
 
+
         public AccountController(IUserService userService, ICaptchaValidator captchaValidator)
         {
             _userService = userService;
@@ -50,7 +51,7 @@ namespace MarketPlace.Web.Controllers
                     case RegisterUserResult.Success:
                         TempData[SuccessMessage] = "ثبت نام شما با موفقیت انجام شد";
                         TempData[InfoMessage] = "کد تایید تلفن همراه برای شما ارسال شد";
-                        return RedirectToAction("login");
+                        return RedirectToAction("ActivateMobile", new { Mobile = model.Mobile });
                 };
             }
 
@@ -70,6 +71,8 @@ namespace MarketPlace.Web.Controllers
         [HttpPost("login"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserDTO model)
         {
+            if (User.Identity!.IsAuthenticated) { return Redirect("/"); }
+
             if (!await _captchaValidator.IsCaptchaPassedAsync(model.Captcha))
             {
                 TempData[ErrorMessage] = "کد کپچا تایید نشد";
@@ -110,6 +113,39 @@ namespace MarketPlace.Web.Controllers
 
                 }
             }
+            return View(model);
+        }
+        #endregion
+
+        #region mobile activation
+        [HttpGet("activate-mobile/{mobile}")]
+        public IActionResult ActivateMobile(string mobile)
+        {
+            var model = new ActivateMobileDTO { Mobile = mobile };
+            return View(model);
+        }
+
+        [HttpPost("activate-mobile/{mobile}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActivateMobile(ActivateMobileDTO model)
+        {
+            if (User.Identity!.IsAuthenticated) { return Redirect("/"); }
+
+            if (!await _captchaValidator.IsCaptchaPassedAsync(model.Captcha))
+            {
+                TempData[ErrorMessage] = "کد کپچا تایید نشد";
+                return View(model);
+            }
+            if (ModelState.IsValid)
+            {
+                var res = await _userService.ActivateMobile(model);
+                if (res)
+                {
+                    TempData[SuccessMessage] = "حساب کاربری شما با موفقیت فعال گردید";
+                    return RedirectToAction("Login");
+                }
+                TempData[ErrorMessage] = "کاربری با مشخصات وارد شده یافت نشد";
+            }
+
             return View(model);
         }
         #endregion
