@@ -1,4 +1,5 @@
 ﻿using MarketPlace.DataLayer.Entities.Account;
+using MarketPlace.DataLayer.Entities.Contacts;
 using MarketPlace.DataLayer.Entities.Site;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,6 +18,10 @@ namespace MarketPlace.DataLayer.Context
         }
         #region account
         public DbSet<User> Users { get; set; }
+        #endregion
+
+        #region contacts
+        public DbSet<ContactUs> ContactUses { get; set; }
         #endregion
 
         #region siteSetting

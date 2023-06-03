@@ -18,7 +18,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-		[Required(ErrorMessage = "{0} را وارد کنید")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string EmailActiveCode { get; set; }
 
@@ -26,11 +26,11 @@ namespace MarketPlace.DataLayer.Entities.Account
         public bool IsEmailActive { get; set; }
 
         [Display(Name = "تلفن همراه")]
-        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(50, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Mobile { get; set; }
 
-        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(20, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string MobileActiveCode { get; set; }
 
@@ -38,17 +38,17 @@ namespace MarketPlace.DataLayer.Entities.Account
         public bool IsMobileActive { get; set; }
 
         [Display(Name = "کلمه عبور")]
-        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Password { get; set; }
 
         [Display(Name = "نام")]
-        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string FirstName { get; set; }
 
         [Display(Name = "نام خانوادگی")]
-        [Required(ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string LastName { get; set; }
 
