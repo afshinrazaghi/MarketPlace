@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.Application.Services.Interfaces
 {
-    public interface ISiteSettingService:IAsyncDisposable
+    public interface ISiteService : IAsyncDisposable
     {
+        #region site settings
         public Task<SiteSetting?> GetDefaultSiteSetting();
+        #endregion
+
+        #region slider
+
+        public Task<List<Slider>> GetAllActiveSliders();
+        #endregion
     }
 }

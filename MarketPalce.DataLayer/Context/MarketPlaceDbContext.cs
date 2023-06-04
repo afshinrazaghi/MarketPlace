@@ -24,8 +24,9 @@ namespace MarketPlace.DataLayer.Context
         public DbSet<ContactUs> ContactUses { get; set; }
         #endregion
 
-        #region siteSetting
+        #region site
         public DbSet<SiteSetting> SiteSettings { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
         #endregion
 
         #region on model creating

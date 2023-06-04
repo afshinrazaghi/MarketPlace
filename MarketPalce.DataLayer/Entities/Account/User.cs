@@ -1,4 +1,5 @@
 ﻿using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.Contacts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,10 @@ namespace MarketPlace.DataLayer.Entities.Account
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+            ContactUses = new HashSet<ContactUs>();
+        }
         #region properties
         [Display(Name = "ایمیل")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
@@ -18,8 +23,8 @@ namespace MarketPlace.DataLayer.Entities.Account
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string EmailActiveCode { get; set; }
 
         [Display(Name = "ایمیل فعال / غیر فعال")]
@@ -61,7 +66,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         #endregion
 
         #region relations
-
+        public virtual ICollection<ContactUs> ContactUses { get; set; }
         #endregion
     }
 }

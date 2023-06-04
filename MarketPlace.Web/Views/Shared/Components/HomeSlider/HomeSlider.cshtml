@@ -1,0 +1,58 @@
+﻿@using MarketPlace.DataLayer.Entities.Site;
+@using MarketPlace.Application.EntitiesExtensions;
+@model List<Slider>;
+
+@if (Model != null && Model.Any())
+{
+	<section class="slider_section mb-70">
+		<div class="slider_area owl-carousel">
+			@foreach (var slider in Model)
+			{
+				<div class="single_slider d-flex align-items-center" data-bgimg="@slider.GetSliderImageAddress()">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="slider_content">
+								<h1> @slider.MainHeader </h1>
+								<h2>@slider.SecondHeader</h2>
+								<p>@slider.Description</p>
+								<a class="button" href="@slider.Link">@slider.Button</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			}
+			@*<div class="single_slider d-flex align-items-center" data-bgimg="/img/slider/slider2.jpg">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="slider_content">
+								<h1>دوربین دوگانه</h1>
+								<h2>کیفیت 20MP</h2>
+								<p>پیشنهاد ویژه <span> 20% تخفیف </span> این هفته</p>
+								<a class="button" href="shop.html">اکنون بخرید</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="single_slider d-flex align-items-center" data-bgimg="/img/slider/slider3.jpg">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="slider_content">
+								<h1>عجله کنید!</h1>
+								<h2>محصولات برتر سال</h2>
+								<p>پیشنهاد ویژه <span> 20% تخفیف </span> این هفته</p>
+								<a class="button" href="shop.html">اکنون بخرید</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>*@
+		</div>
+	</section>
+}
+<!--slider area end-->

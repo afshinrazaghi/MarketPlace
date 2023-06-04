@@ -1,7 +1,9 @@
-﻿using MarketPlace.DataLayer.Entities.Common;
+﻿using MarketPlace.DataLayer.Entities.Account;
+using MarketPlace.DataLayer.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
 {
     public class ContactUs : BaseEntity
     {
+        #region propeties
         public long? UserId { get; set; }
 
 
@@ -38,5 +41,11 @@ namespace MarketPlace.DataLayer.Entities.Contacts
         [Display(Name = "پیام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Text { get; set; }
+        #endregion
+
+        #region relations
+        [ForeignKey("UserId")]
+        public virtual User? User { get; set; }
+        #endregion
     }
 }
