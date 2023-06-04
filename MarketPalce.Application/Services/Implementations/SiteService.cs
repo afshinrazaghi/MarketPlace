@@ -44,7 +44,7 @@ namespace MarketPlace.Application.Services.Implementations
 		#region site banners
 		public async Task<List<SiteBanner>> GetSiteBannersByPlacement(List<BannerPlacement> bannerPlacements)
 		{
-			return await _siteBannerRepository.GetQuery().Where(siteBanner => bannerPlacements.Any(p => siteBanner.BannerPlacement == p)).ToListAsync();
+			return await _siteBannerRepository.GetQuery().Where(siteBanner => bannerPlacements.Contains(siteBanner.BannerPlacement)).ToListAsync();
 		}
 		#endregion
 
