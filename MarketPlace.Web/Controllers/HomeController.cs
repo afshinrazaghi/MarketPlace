@@ -26,8 +26,14 @@ namespace MarketPlace.Web.Controllers
 		#endregion
 
 		#region index
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
         {
+            ViewBag.banners =await _siteService.GetSiteBannersByPlacement(new List<DataLayer.Entities.Site.BannerPlacement>
+            {
+                DataLayer.Entities.Site.BannerPlacement.Home_1,
+                DataLayer.Entities.Site.BannerPlacement.Home_2,
+                DataLayer.Entities.Site.BannerPlacement.Home_3
+            });
             return View();
         }
         #endregion

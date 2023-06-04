@@ -24,7 +24,7 @@ namespace MarketPlace.DataLayer.Entities.Site
 		[Display(Name = "سایز (کلاس های نمایش)")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
-		public string GolSize { get; set; }
+		public string ColSize { get; set; }
 
 		[Display(Name = "موقعیت بنر")]
 		public BannerPlacement BannerPlacement { get; set; }
