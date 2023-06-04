@@ -10,45 +10,57 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.Application.Services.Implementations
 {
-    public class SiteService : ISiteService
-    {
-        #region constructor
-        private readonly IGenericRepository<SiteSetting> _siteSettingRepository;
-        private readonly IGenericRepository<Slider> _sliderRepository;
+	public class SiteService : ISiteService
+	{
+		#region constructor
+		private readonly IGenericRepository<SiteSetting> _siteSettingRepository;
+		private readonly IGenericRepository<Slider> _sliderRepository;
+		private readonly IGenericRepository<SiteBanner> _siteBannerRepository;
 
-        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository)
-        {
-            _siteSettingRepository = siteSettingRepository;
-            _sliderRepository = sliderRepository;
-        }
-        #endregion
+		public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository, IGenericRepository<SiteBanner> siteBannerRepository)
+		{
+			_siteSettingRepository = siteSettingRepository;
+			_sliderRepository = sliderRepository;
+			_siteBannerRepository = siteBannerRepository;
+		}
+		#endregion
 
-        #region site settings
-        public async Task<SiteSetting?> GetDefaultSiteSetting()
-        {
-            return await _siteSettingRepository.GetQuery().AsNoTracking().SingleOrDefaultAsync(site => site.IsDefault && !site.IsDelete);
+		#region site settings
+		public async Task<SiteSetting?> GetDefaultSiteSetting()
+		{
+			return await _siteSettingRepository.GetQuery().AsNoTracking().SingleOrDefaultAsync(site => site.IsDefault && !site.IsDelete);
 
-        }
-        #endregion
+		}
+		#endregion
 
-        #region slider
+		#region slider
 
-        public async Task<List<Slider>> GetAllActiveSliders()
-        {
-            return await _sliderRepository.GetQuery().AsNoTracking().Where(s => s.IsActive && !s.IsDelete).ToListAsync();
-        }
-        #endregion
+		public async Task<List<Slider>> GetAllActiveSliders()
+		{
+			return await _sliderRepository.GetQuery().AsNoTracking().Where(s => s.IsActive && !s.IsDelete).ToListAsync();
+		}
+		#endregion
 
-        #region dispose
-        public async ValueTask DisposeAsync()
-        {
-            if (_siteSettingRepository is not null)
-                await _siteSettingRepository.DisposeAsync();
+		#region site banners
+		public async Task<List<SiteBanner>> GetSiteBannersByPlacement(List<BannerPlacement> bannerPlacements)
+		{
+			return await _siteBannerRepository.GetQuery().Where(siteBanner => bannerPlacements.Any(p => siteBanner.BannerPlacement == p)).ToListAsync();
+		}
+		#endregion
 
-            if (_sliderRepository is not null)
-                await _sliderRepository.DisposeAsync();
-        }
+		#region dispose
+		public async ValueTask DisposeAsync()
+		{
+			if (_siteSettingRepository is not null)
+				await _siteSettingRepository.DisposeAsync();
 
-        #endregion
-    }
+			if (_sliderRepository is not null)
+				await _sliderRepository.DisposeAsync();
+
+			if (_siteBannerRepository is not null)
+				await _siteBannerRepository.DisposeAsync();
+		}
+
+		#endregion
+	}
 }

@@ -19,7 +19,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         #region properties
         [Display(Name = "ایمیل")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
-        [EmailAddress(ErrorMessage = "{0} نام معتبر است")]
+        [EmailAddress(ErrorMessage = "{0} نا معتبر است")]
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 

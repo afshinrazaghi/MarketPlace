@@ -14,17 +14,19 @@ namespace MarketPlace.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICaptchaValidator _captchaValidator;
         private readonly IContactService _contactService;
+        private readonly ISiteService _siteService;
 
-        public HomeController(ILogger<HomeController> logger, ICaptchaValidator captchaValidator, IContactService contactService)
-        {
-            _logger = logger;
-            _captchaValidator = captchaValidator;
-            _contactService = contactService;
-        }
-        #endregion
+		public HomeController(ILogger<HomeController> logger, ICaptchaValidator captchaValidator, IContactService contactService, ISiteService siteService)
+		{
+			_logger = logger;
+			_captchaValidator = captchaValidator;
+			_contactService = contactService;
+			_siteService = siteService;
+		}
+		#endregion
 
-        #region index
-        public IActionResult Index()
+		#region index
+		public IActionResult Index()
         {
             return View();
         }

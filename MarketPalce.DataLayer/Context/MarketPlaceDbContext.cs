@@ -10,35 +10,36 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.DataLayer.Context
 {
-    public class MarketPlaceDbContext : DbContext
-    {
-        public MarketPlaceDbContext(DbContextOptions<MarketPlaceDbContext> options)
-            : base(options)
-        {
-        }
-        #region account
-        public DbSet<User> Users { get; set; }
-        #endregion
+	public class MarketPlaceDbContext : DbContext
+	{
+		public MarketPlaceDbContext(DbContextOptions<MarketPlaceDbContext> options)
+			: base(options)
+		{
+		}
+		#region account
+		public DbSet<User> Users { get; set; }
+		#endregion
 
-        #region contacts
-        public DbSet<ContactUs> ContactUses { get; set; }
-        #endregion
+		#region contacts
+		public DbSet<ContactUs> ContactUses { get; set; }
+		#endregion
 
-        #region site
-        public DbSet<SiteSetting> SiteSettings { get; set; }
-        public DbSet<Slider> Sliders { get; set; }
-        #endregion
+		#region site
+		public DbSet<SiteSetting> SiteSettings { get; set; }
+		public DbSet<Slider> Sliders { get; set; }
+		public DbSet<SiteBanner> SiteBanners { get; set; }
+		#endregion
 
-        #region on model creating
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            foreach (var relation in modelBuilder.Model.GetEntityTypes().SelectMany(s => s.GetForeignKeys()))
-            {
-                relation.DeleteBehavior = DeleteBehavior.Cascade;
-            }
+		#region on model creating
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			foreach (var relation in modelBuilder.Model.GetEntityTypes().SelectMany(s => s.GetForeignKeys()))
+			{
+				relation.DeleteBehavior = DeleteBehavior.Cascade;
+			}
 
-            base.OnModelCreating(modelBuilder);
-        }
-        #endregion
-    }
+			base.OnModelCreating(modelBuilder);
+		}
+		#endregion
+	}
 }
