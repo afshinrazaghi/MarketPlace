@@ -11,17 +11,19 @@ namespace MarketPlace.Application.Services.Interfaces
     public interface IUserService : IAsyncDisposable
     {
         #region account
-        public Task<RegisterUserResult> RegisterUser(RegisterUserDTO model);
+        Task<RegisterUserResult> RegisterUser(RegisterUserDTO model);
 
-        public Task<bool> IsUserExistsByMobileNumber(string mobileNumber);
+        Task<bool> IsUserExistsByMobileNumber(string mobileNumber);
 
-        public Task<LoginUserResult> LoginUser(LoginUserDTO model);
+        Task<LoginUserResult> LoginUser(LoginUserDTO model);
 
-        public Task<User?> GetUserByMobile(string mobileNumber);
+        Task<User?> GetUserByMobile(string mobileNumber);
 
-        public Task<ForgotPasswordResult> RecoverPassword(ForgotPasswordDTO model);
+        Task<ForgotPasswordResult> RecoverPassword(ForgotPasswordDTO model);
 
-        public Task<bool> ActivateMobile(ActivateMobileDTO model);
+        Task<bool> ActivateMobile(ActivateMobileDTO model);
+
+        Task<ChangePasswordResult> ChangeUserPassword(ChangePasswordDTO model, long currentUserId);
         #endregion
     }
 }

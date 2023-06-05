@@ -68,13 +68,6 @@ namespace MarketPlace.Application.Services.Implementations
         {
             return await _userRepository.GetQuery().SingleOrDefaultAsync(u => u.Mobile == mobileNumber);
         }
-        #endregion
-
-        #region dispose
-        public async ValueTask DisposeAsync()
-        {
-            await _userRepository.DisposeAsync();
-        }
 
         public async Task<ForgotPasswordResult> RecoverPassword(ForgotPasswordDTO model)
         {
@@ -107,6 +100,29 @@ namespace MarketPlace.Application.Services.Implementations
 
             return false;
         }
+
+        public async Task<ChangePasswordResult> ChangeUserPassword(ChangePasswordDTO model, long currentUserId)
+        {
+            var user = await _userRepository.GetEntityById(currentUserId);
+            if (user is null) return ChangePasswordResult.UserNotFound;
+            if (!_passwordHelper.VerifyPassword(model.CurrentPassword, user.Password)) return ChangePasswordResult.CurrentPasswordIncorrect;
+            if (_passwordHelper.VerifyPassword(model.NewPassword, user.Password)) return ChangePasswordResult.UseNewPassword;
+            user.Password = _passwordHelper.HashPassword(model.NewPassword);
+            _userRepository.EditEntity(user);
+            await _userRepository.SaveChanges();
+            return ChangePasswordResult.Success;
+        }
+
+
+        #endregion
+
+        #region dispose
+        public async ValueTask DisposeAsync()
+        {
+            await _userRepository.DisposeAsync();
+        }
+
+
 
 
         #endregion
