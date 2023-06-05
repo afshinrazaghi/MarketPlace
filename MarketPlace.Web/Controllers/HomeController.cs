@@ -68,5 +68,15 @@ namespace MarketPlace.Web.Controllers
 
         #endregion
 
+        #region about us
+
+        [HttpGet("about-us")]
+        public async Task<IActionResult> AboutUs()
+        {
+            var siteSetting = await _siteService.GetDefaultSiteSetting();
+            return View(siteSetting);
+        }
+        #endregion
+
     }
 }

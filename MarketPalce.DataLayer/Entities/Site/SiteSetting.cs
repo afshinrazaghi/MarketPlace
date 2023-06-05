@@ -38,7 +38,10 @@ namespace MarketPlace.DataLayer.Entities.Site
 		[MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
 		public string? Address { get; set; }
 
-		[Display(Name = "فعال/ غیرفعال")]
+        [Display(Name = "دریاه ما")]
+        public string? AboutUs { get; set; }
+
+        [Display(Name = "فعال/ غیرفعال")]
 		public bool IsDefault { get; set; }
         #endregion
 
