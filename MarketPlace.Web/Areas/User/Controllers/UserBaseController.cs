@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarketPlace.Web.Areas.User.Controllers
 {
     [Authorize]
-    public class UserBaseController : Controller
+	[Area("User")]
+	[Route("user")]
+	public class UserBaseController : Controller
     {
         
     }
