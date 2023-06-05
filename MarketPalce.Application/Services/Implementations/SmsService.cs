@@ -17,5 +17,14 @@ namespace MarketPlace.Application.Services.Implementations
             kavenegarApi.VerifyLookup(mobile, activationCode, "MarketVerify"); 
 #endif
         }
+
+
+        public void SendUserPasswordSms(string mobile, string password)
+        {
+#if !DEBUG
+            var kavenegarApi = new Kavenegar.KavenegarApi(apiKey);
+            kavenegarApi.VerifyLookup(mobile, password, "MarketPassword");
+#endif
+        }
     }
 }

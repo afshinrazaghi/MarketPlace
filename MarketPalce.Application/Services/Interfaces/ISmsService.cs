@@ -9,5 +9,6 @@ namespace MarketPlace.Application.Services.Interfaces
     public interface ISmsService
     {
         void SendSms(string mobile, string activationCode);
+        void SendUserPasswordSms(string mobile, string password);
     }
 }

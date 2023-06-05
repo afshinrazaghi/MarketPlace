@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MarketPalce.DataLayer\MarketPlace.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\User\Views\Shared\" />
+  </ItemGroup>
+
 </Project>
