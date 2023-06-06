@@ -24,6 +24,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<bool> ActivateMobile(ActivateMobileDTO model);
 
         Task<ChangePasswordResult> ChangeUserPassword(ChangePasswordDTO model, long currentUserId);
+
+        Task<EditProfileDTO?> GetProfileForEdit(long userId);
         #endregion
     }
 }

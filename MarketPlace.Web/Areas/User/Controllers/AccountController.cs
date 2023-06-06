@@ -26,7 +26,7 @@ namespace MarketPlace.Web.Areas.User.Controllers
             return View();
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("change-password"), ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordDTO model)
         {
             if (!await _captchaValidator.IsCaptchaPassedAsync(model.Captcha))
@@ -57,6 +57,22 @@ namespace MarketPlace.Web.Areas.User.Controllers
                     return RedirectToAction("Login", "Account", new { area = "" });
             }
 
+            return View(model);
+        }
+        #endregion
+
+        #region edit profile
+        [HttpGet("edit-profile")]
+        public async Task<IActionResult> EditProfile()
+        {
+            var userProfile = await _userService.GetProfileForEdit(User.GetUserId()!.Value);
+            if (userProfile is null) return NotFound();
+            return View(userProfile);
+        }
+
+        [HttpPost("edit-profile")]
+        public async Task<IActionResult> EditProfile(EditProfileDTO model, IFormFile avatar)
+        {
             return View(model);
         }
         #endregion

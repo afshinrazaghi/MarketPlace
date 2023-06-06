@@ -113,6 +113,21 @@ namespace MarketPlace.Application.Services.Implementations
             return ChangePasswordResult.Success;
         }
 
+        public async Task<EditProfileDTO?> GetProfileForEdit(long userId)
+        {
+            var user = await _userRepository.GetEntityById(userId);
+            if (user is not null)
+            {
+                return new EditProfileDTO
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Avatar = user.Avatar
+                };
+            }
+            return null;
+        }
+
 
         #endregion
 
@@ -121,6 +136,8 @@ namespace MarketPlace.Application.Services.Implementations
         {
             await _userRepository.DisposeAsync();
         }
+
+
 
 
 
