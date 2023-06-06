@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace MarketPlace.DataLayer.DTOs.Account
 {
-    public class EditProfileDTO 
+    public class EditProfileDTO
     {
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -24,5 +24,13 @@ namespace MarketPlace.DataLayer.DTOs.Account
         [Display(Name = "تصویر آواتار")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  { 1} کاراکتر باشد")]
         public string? Avatar { get; set; }
+    }
+
+    public enum EditProfileResult
+    {
+        NotFound,
+        IsBlocked,
+        IsNotActive,
+        Success
     }
 }

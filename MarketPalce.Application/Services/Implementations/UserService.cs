@@ -129,6 +129,22 @@ namespace MarketPlace.Application.Services.Implementations
         }
 
 
+        public async Task<EditProfileResult> EditUserProfile(EditProfileDTO model, long userId)
+        {
+            var user = await _userRepository.GetEntityById(userId);
+            if (user is null) return EditProfileResult.NotFound;
+            if (user.IsBlocked) return EditProfileResult.IsBlocked;
+            if (!user.IsMobileActive) return EditProfileResult.IsNotActive;
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            _userRepository.EditEntity(user);
+            await _userRepository.SaveChanges();
+            return EditProfileResult.Success;
+        }
+
+
+
         #endregion
 
         #region dispose
@@ -136,6 +152,7 @@ namespace MarketPlace.Application.Services.Implementations
         {
             await _userRepository.DisposeAsync();
         }
+
 
 
 

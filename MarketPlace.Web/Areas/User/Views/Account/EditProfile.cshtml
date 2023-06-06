@@ -1,12 +1,10 @@
-﻿@using MarketPlace.Application.Utils;
-@model MarketPlace.DataLayer.DTOs.Account.EditProfileDTO;
+﻿@model MarketPlace.DataLayer.DTOs.Account.EditProfileDTO;
 @{
     ViewData["Title"] = "ویرایش اطلاعات";
 }
 
 @section scripts{
     <partial name="_JqueryValidators" />
-    <partial name="_CaptchaScripts" />
 }
 
 <!--breadcrumbs area start-->
@@ -44,16 +42,18 @@
                                     <div class="account_login_form">
                                         <form asp-area="User" asp-controller="Account" asp-action="EditProfile">
                                             <label>نام</label>
-                                            <input type="password" asp-for="FirstName" />
+                                            <input type="text" asp-for="FirstName" />
                                             <span asp-validation-for="FirstName" class="text-danger"></span>
                                             <br />
                                             <label>نام خانوادگی</label>
-                                            <input type="password" asp-for="LastName" />
+                                            <input type="text" asp-for="LastName" />
                                             <span asp-validation-for="LastName" class="text-danger"></span>
                                             <br />
-                                            <div class="col-md-9"></div>
+                                            <div class="col-md-9">
+                                                <input name="avatarImage" type="file" />
+                                            </div>
                                             <div class="col-md-3">
-                                                <img style="border-radius:50%; width:150px" src="@(!string.IsNullOrEmpty(@Model.Avatar) ? PathExtension.AvatarImage+@Model.Avatar: PathExtension.DefaultAvatar) " />
+                                                <img style="border-radius:50%; width:150px" src="@(!string.IsNullOrEmpty(@Model.Avatar) ? MarketPlace.Application.Utils.PathExtension.AvatarImage+@Model.Avatar: MarketPlace.Application.Utils.PathExtension.DefaultAvatar) " />
                                             </div>
 
                                             <div class="save_button primary_btn default_button">

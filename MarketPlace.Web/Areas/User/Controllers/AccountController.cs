@@ -70,9 +70,28 @@ namespace MarketPlace.Web.Areas.User.Controllers
             return View(userProfile);
         }
 
-        [HttpPost("edit-profile")]
-        public async Task<IActionResult> EditProfile(EditProfileDTO model, IFormFile avatar)
+        [HttpPost("edit-profile"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(EditProfileDTO model, IFormFile? avatarImage)
         {
+            if (ModelState.IsValid)
+            {
+                var res = await _userService.EditUserProfile(model, User.GetUserId()!.Value);
+                switch (res)
+                {
+                    case EditProfileResult.NotFound:
+                        TempData[ErrorMessage] = "کاربری با مشخصات وارد شده یافت نشد، لطفا مجددا وارد سیستم شوید";
+                        break;
+                    case EditProfileResult.IsBlocked:
+                        TempData[ErrorMessage] = "حساب کاربری شما بلاک شده است";
+                        break;
+                    case EditProfileResult.IsNotActive:
+                        TempData[ErrorMessage] = "حساب کاربری شما فعال نشده است";
+                        break;
+                    case EditProfileResult.Success:
+                        TempData[SuccessMessage] = "اطلاعات کاربر با موفقیت ویرایش شد";
+                        break;
+                }
+            }
             return View(model);
         }
         #endregion
