@@ -75,7 +75,7 @@ namespace MarketPlace.Web.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = await _userService.EditUserProfile(model, User.GetUserId()!.Value);
+                var res = await _userService.EditUserProfile(model, User.GetUserId()!.Value, avatarImage);
                 switch (res)
                 {
                     case EditProfileResult.NotFound:
@@ -89,6 +89,7 @@ namespace MarketPlace.Web.Areas.User.Controllers
                         break;
                     case EditProfileResult.Success:
                         TempData[SuccessMessage] = "اطلاعات کاربر با موفقیت ویرایش شد";
+                        return RedirectToAction("EditProfile");
                         break;
                 }
             }

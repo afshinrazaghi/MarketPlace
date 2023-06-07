@@ -1,5 +1,6 @@
 ﻿using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace MarketPlace.Application.Services.Interfaces
 
         Task<EditProfileDTO?> GetProfileForEdit(long userId);
 
-        public Task<EditProfileResult> EditUserProfile(EditProfileDTO model, long userId);
+        public Task<EditProfileResult> EditUserProfile(EditProfileDTO model, long userId,IFormFile? avatarImage);
         #endregion
     }
 }

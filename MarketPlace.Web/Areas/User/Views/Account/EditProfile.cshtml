@@ -40,7 +40,7 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form asp-area="User" asp-controller="Account" asp-action="EditProfile">
+                                        <form asp-area="User" asp-controller="Account" asp-action="EditProfile" enctype="multipart/form-data">
                                             <label>نام</label>
                                             <input type="text" asp-for="FirstName" />
                                             <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -53,7 +53,7 @@
                                                 <input name="avatarImage" type="file" />
                                             </div>
                                             <div class="col-md-3">
-                                                <img style="border-radius:50%; width:150px" src="@(!string.IsNullOrEmpty(@Model.Avatar) ? MarketPlace.Application.Utils.PathExtension.AvatarImage+@Model.Avatar: MarketPlace.Application.Utils.PathExtension.DefaultAvatar) " />
+                                                <img style="border-radius:50%; width:150px" src="@(!string.IsNullOrEmpty(@Model.Avatar) ? MarketPlace.Application.Utils.PathExtension.UserAvatarOrigin+@Model.Avatar: MarketPlace.Application.Utils.PathExtension.DefaultAvatar) " />
                                             </div>
 
                                             <div class="save_button primary_btn default_button">

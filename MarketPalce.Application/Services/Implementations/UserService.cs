@@ -1,7 +1,10 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using MarketPlace.Application.Extensions;
+using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utils;
 using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -129,13 +132,18 @@ namespace MarketPlace.Application.Services.Implementations
         }
 
 
-        public async Task<EditProfileResult> EditUserProfile(EditProfileDTO model, long userId)
+        public async Task<EditProfileResult> EditUserProfile(EditProfileDTO model, long userId, IFormFile? avatarImage)
         {
             var user = await _userRepository.GetEntityById(userId);
             if (user is null) return EditProfileResult.NotFound;
             if (user.IsBlocked) return EditProfileResult.IsBlocked;
             if (!user.IsMobileActive) return EditProfileResult.IsNotActive;
-
+            if (avatarImage is not null && avatarImage.IsImage())
+            {
+                string fileName = Path.GetFileNameWithoutExtension(avatarImage.FileName) + "_" + Guid.NewGuid().ToString("N") + Path.GetExtension(avatarImage.FileName);
+                avatarImage.AddImageToServer(fileName, PathExtension.UserAvatarOriginServer, 100, 100, PathExtension.UserAvatarThumbServer, user.Avatar);
+                user.Avatar = fileName;
+            }
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             _userRepository.EditEntity(user);

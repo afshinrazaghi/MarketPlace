@@ -9,14 +9,20 @@ namespace MarketPlace.Application.Utils
     public static class PathExtension
     {
 
-        #region Avatar
-        public static string AvatarImage = "/Content/Images/UserAvatar/origin";
-
-        #endregion
-
         #region default images
         public static string DefaultAvatar = "/img/defaults/avatar.png";
         #endregion
+
+        #region user Avatar
+        public static string UserAvatarOrigin = "/Content/Images/UserAvatar/origin/";
+        public static string UserAvatarOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/UserAvatar/origin/");
+
+
+        public static string UserAvatarThumb = "/Content/Images/UserAvatar/Thumb/";
+        public static string UserAvatarThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/UserAvatar/thumb/");
+        #endregion
+
+   
 
         #region slider
         public static string SliderOrigin = "/img/slider/";
