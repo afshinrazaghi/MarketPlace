@@ -25,6 +25,9 @@ namespace MarketPlace.DataLayer.Entities.Contacts
 
         public TicketPriority TicketPriority { get; set; }
         public TicketStatus TicketStatus { get; set; }
+
+        public bool IsReadByOwner { get; set; }
+        public bool IsReadByAdmin { get; set; }
         #endregion
 
         #region relations
