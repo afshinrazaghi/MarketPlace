@@ -26,8 +26,6 @@ namespace MarketPlace.Application.Utils
             if (!mimeTyeps.Contains(postedFile.ContentType.ToLower()))
                 return false;
 
-
-
             //-------------------------------------------
             //  Check the image extension
             //-------------------------------------------

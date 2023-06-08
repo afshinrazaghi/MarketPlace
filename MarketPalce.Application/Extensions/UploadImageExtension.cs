@@ -20,7 +20,7 @@ namespace MarketPlace.Application.Extensions
                 string originPath = originalPath + fileName;
 
                 if (!string.IsNullOrEmpty(deleteFileName))
-                    (deleteFileName).DeleteImage(originalPath, thumbPath);
+                    deleteFileName.DeleteImage(originalPath, thumbPath);
 
 
                 using (var stream = new FileStream(originPath, FileMode.Create))
