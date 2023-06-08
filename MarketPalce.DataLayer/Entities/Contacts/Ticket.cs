@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.DataLayer.Entities.Contacts
 {
-    public class Ticket:BaseEntity
+    public class Ticket : BaseEntity
     {
         #region constcructor
         public Ticket()
@@ -20,10 +20,19 @@ namespace MarketPlace.DataLayer.Entities.Contacts
 
         #region properties
         public long OwnerId { get; set; }
+
+        [Display(Name = "عنوان")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Title { get; set; }
+
+        [Display(Name ="بخش مورد نظر")]
         public TicketSection TicketSection { get; set; }
 
+        [Display(Name ="اولویت")]
         public TicketPriority TicketPriority { get; set; }
+
+        [Display(Name ="وضعیت تیکت")]
         public TicketStatus TicketStatus { get; set; }
 
         public bool IsReadByOwner { get; set; }
@@ -39,7 +48,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
 
     public enum TicketSection
     {
-        [Display(Name ="پشتیبانی")]
+        [Display(Name = "پشتیبانی")]
         Support,
         [Display(Name = "فنی")]
         Technical,
