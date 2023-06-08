@@ -10,13 +10,13 @@ using System.Xml.Linq;
 
 namespace MarketPlace.DataLayer.Entities.Contacts
 {
-    public class TickerMessage : BaseEntity
+    public class TicketMessage : BaseEntity
     {
         #region properties
         public long TicketId { get; set; }
         public long SenderId { get; set; }
 
-        [Display(Name = "عنوان")]
+        [Display(Name = "متن پیام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Text { get; set; }
         #endregion
