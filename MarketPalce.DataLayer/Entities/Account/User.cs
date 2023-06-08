@@ -16,7 +16,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         {
             ContactUses = new HashSet<ContactUs>();
             Tickets = new HashSet<Ticket>();
-            TickerMessages = new HashSet<TickerMessage>();
+            TickerMessages = new HashSet<TicketMessage>();
         }
         #region properties
         [Display(Name = "ایمیل")]
@@ -70,7 +70,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         #region relations
         public virtual ICollection<ContactUs> ContactUses { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
-        public virtual ICollection<TickerMessage> TickerMessages { get; set; }
+        public virtual ICollection<TicketMessage> TickerMessages { get; set; }
         #endregion
     }
 }

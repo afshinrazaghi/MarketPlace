@@ -14,7 +14,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
         #region constcructor
         public Ticket()
         {
-            TickerMessages = new HashSet<TickerMessage>();
+            TickerMessages = new HashSet<TicketMessage>();
         }
         #endregion
 
@@ -41,7 +41,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
 
         #region relations
         public virtual User Owner { get; set; }
-        public virtual ICollection<TickerMessage> TickerMessages { get; set; }
+        public virtual ICollection<TicketMessage> TickerMessages { get; set; }
 
         #endregion
     }
