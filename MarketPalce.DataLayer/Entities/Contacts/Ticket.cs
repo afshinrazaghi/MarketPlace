@@ -33,7 +33,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
         public TicketPriority TicketPriority { get; set; }
 
         [Display(Name ="وضعیت تیکت")]
-        public TicketStatus TicketStatus { get; set; }
+        public TicketState TicketState { get; set; }
 
         public bool IsReadByOwner { get; set; }
         public bool IsReadByAdmin { get; set; }
@@ -66,7 +66,7 @@ namespace MarketPlace.DataLayer.Entities.Contacts
         Hight
     }
 
-    public enum TicketStatus
+    public enum TicketState
     {
         [Display(Name = "در حال بررسی")]
         UnderProgress,

@@ -1,4 +1,5 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using AutoMapper;
+using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Contacts;
 using MarketPlace.DataLayer.Entities.Contacts;
 using MarketPlace.DataLayer.Repository;
@@ -14,9 +15,13 @@ namespace MarketPlace.Application.Services.Implementations
     {
         #region constructor
         private readonly IGenericRepository<ContactUs> _contactUsRepository;
-        public ContactService(IGenericRepository<ContactUs> genericRepository)
+        private readonly IGenericRepository<Ticket> _ticketRepository;
+        private readonly IMapper _mapper;
+        public ContactService(IGenericRepository<ContactUs> genericRepository, IMapper mapper, IGenericRepository<Ticket> ticketRepository)
         {
             _contactUsRepository = genericRepository;
+            _mapper = mapper;
+            _ticketRepository = ticketRepository;
         }
         #endregion
 
@@ -37,6 +42,28 @@ namespace MarketPlace.Application.Services.Implementations
             await _contactUsRepository.SaveChanges();
         }
 
+        #endregion
+
+        #region ticket
+        public async Task<CreateTicketResult> CreateUserTicket(CreateTicketDTO model, long userId)
+        {
+            if (string.IsNullOrEmpty(model.Text))
+                return CreateTicketResult.Error;
+
+            var ticket = _mapper.Map<Ticket>(model);
+            ticket.OwnerId = userId;
+
+            var ticketMessage = _mapper.Map<TicketMessage>(model);
+            ticketMessage.SenderId = userId;
+
+            ticket.TickerMessages = new List<TicketMessage> { ticketMessage };
+
+
+            ticketMessage.SenderId = userId;
+            await _ticketRepository.AddEntity(ticket);
+            await _ticketRepository.SaveChanges();
+            return CreateTicketResult.Success;
+        }
         #endregion
 
         #region dispose

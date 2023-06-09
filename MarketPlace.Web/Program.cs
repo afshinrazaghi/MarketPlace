@@ -9,20 +9,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-
+using MarketPlace.Application;
 var builder = WebApplication.CreateBuilder(args);
 
 #region config services
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IContactService, ContactService>();
-builder.Services.AddScoped<ISiteService, SiteService>();
-builder.Services.AddScoped<ISmsService, SmsService>();
-builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
 builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
-
+builder.Services.ConfigureApplicationServices();
 #endregion
 
 #region html encoder

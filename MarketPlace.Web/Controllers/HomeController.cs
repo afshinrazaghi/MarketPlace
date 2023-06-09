@@ -68,6 +68,8 @@ namespace MarketPlace.Web.Controllers
 
         #endregion
 
+
+
         #region about us
 
         [HttpGet("about-us")]
