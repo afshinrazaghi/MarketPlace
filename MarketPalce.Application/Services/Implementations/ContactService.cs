@@ -3,6 +3,7 @@ using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Contacts;
 using MarketPlace.DataLayer.Entities.Contacts;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,47 @@ namespace MarketPlace.Application.Services.Implementations
             await _ticketRepository.AddEntity(ticket);
             await _ticketRepository.SaveChanges();
             return CreateTicketResult.Success;
+        }
+
+        public async Task FilterTicket(FilterTicketDTO filter)
+        {
+            var query = _ticketRepository.GetQuery();
+
+            if (!string.IsNullOrEmpty(filter.Title))
+                query = query.Where(t => EF.Functions.Like(t.Title, $"%{filter.Title}%"));
+
+            if (filter.UserId.HasValue)
+                query = query.Where(t => t.OwnerId == filter.UserId);
+
+            switch (filter.FilterTicketState)
+            {
+                case FilterTicketState.All:
+                    break;
+                case FilterTicketState.NotDeleted:
+                    query = query.Where(t => !t.IsDelete);
+                    break;
+                case FilterTicketState.Deleted:
+                    query = query.Where(t => t.IsDelete);
+                    break;
+            }
+
+            if (filter.TicketSection.HasValue)
+                query = query.Where(t => t.TicketSection == filter.TicketSection.Value);
+
+            if (filter.TicketPriority.HasValue)
+                query = query.Where(t => t.TicketPriority == filter.TicketPriority.Value);
+
+            switch (filter.FilterTicketOrder)
+            {
+                case FilterTicketOrder.CreateDate_ASC:
+                    query = query.OrderBy(t => t.CreateDate);
+                    break;
+                case FilterTicketOrder.CreateDate_DESC:
+                    query = query.OrderByDescending(t => t.CreateDate);
+                    break;
+            }
+
+            int count =await query.CountAsync();
         }
         #endregion
 
