@@ -15,7 +15,7 @@ namespace MarketPlace.Application.Services.Interfaces
 
         #region ticket
         Task<CreateTicketResult> CreateUserTicket(CreateTicketDTO model, long userId);
-        Task FilterTicket(FilterTicketDTO filter);
+        Task<FilterTicketDTO> FilterTicket(FilterTicketDTO filter);
         #endregion
     }
 }

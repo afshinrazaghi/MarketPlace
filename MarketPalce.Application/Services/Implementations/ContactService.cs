@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Contacts;
+using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.Entities.Contacts;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -66,16 +67,19 @@ namespace MarketPlace.Application.Services.Implementations
             return CreateTicketResult.Success;
         }
 
-        public async Task FilterTicket(FilterTicketDTO filter)
+        public async Task<FilterTicketDTO> FilterTicket(FilterTicketDTO filter)
         {
             var query = _ticketRepository.GetQuery();
 
+            #region filter
             if (!string.IsNullOrEmpty(filter.Title))
                 query = query.Where(t => EF.Functions.Like(t.Title, $"%{filter.Title}%"));
 
             if (filter.UserId.HasValue)
                 query = query.Where(t => t.OwnerId == filter.UserId);
+            #endregion
 
+            #region state
             switch (filter.FilterTicketState)
             {
                 case FilterTicketState.All:
@@ -94,6 +98,10 @@ namespace MarketPlace.Application.Services.Implementations
             if (filter.TicketPriority.HasValue)
                 query = query.Where(t => t.TicketPriority == filter.TicketPriority.Value);
 
+
+            #endregion
+
+            #region ordering
             switch (filter.FilterTicketOrder)
             {
                 case FilterTicketOrder.CreateDate_ASC:
@@ -103,8 +111,14 @@ namespace MarketPlace.Application.Services.Implementations
                     query = query.OrderByDescending(t => t.CreateDate);
                     break;
             }
+            #endregion
 
-            int count =await query.CountAsync();
+            #region paging
+            var basePaging = Pager.Build(filter.CurrentPage, await query.CountAsync(), filter.Skip, filter.HowManyBeforeAndAfter);
+            var tickets = await query.Paging(basePaging).ToListAsync();
+            #endregion
+
+            return filter.SetTickets(tickets).SetPaging(basePaging);
         }
         #endregion
 
