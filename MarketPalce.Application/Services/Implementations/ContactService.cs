@@ -114,7 +114,7 @@ namespace MarketPlace.Application.Services.Implementations
             #endregion
 
             #region paging
-            var basePaging = Pager.Build(filter.CurrentPage, await query.CountAsync(), filter.Skip, filter.HowManyBeforeAndAfter);
+            var basePaging = Pager.Build(filter.CurrentPage, await query.CountAsync(), filter.Take, filter.HowManyBeforeAndAfter);
             var tickets = await query.Paging(basePaging).ToListAsync();
             #endregion
 

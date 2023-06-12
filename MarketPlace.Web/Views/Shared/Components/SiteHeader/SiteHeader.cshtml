@@ -1,6 +1,8 @@
-﻿@using MarketPlace.DataLayer.Entities.Site;
+﻿@using MarketPlace.DataLayer.DTOs.Account;
+@using MarketPlace.DataLayer.Entities.Site;
 @{
     var siteSetting = (ViewBag.SiteSetting as SiteSetting)!;
+    var user = ViewBag.User as UserSummaryDTO;
 }
 <!--header area start-->
 <!--Offcanvas menu area start-->
@@ -31,7 +33,7 @@
                         else
                         {
                             <ul>
-                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @User.Identity.Name, خوش آمدید </a></li>
+                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user!.FullName, خوش آمدید </a></li>
                                 <li><a asp-controller="Account" asp-action="Logout"> خروج </a></li>
                             </ul>
                         }
@@ -249,7 +251,7 @@
                             else
                             {
                                 <ul>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @User.Identity.Name, خوش آمدید </a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user!.FullName, خوش آمدید </a></li>
                                     <li><a asp-controller="Account" asp-action="Logout"> خروج </a></li>
                                 </ul>
                             }
