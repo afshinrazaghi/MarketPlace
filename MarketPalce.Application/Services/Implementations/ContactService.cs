@@ -120,6 +120,14 @@ namespace MarketPlace.Application.Services.Implementations
 
             return filter.SetTickets(tickets).SetPaging(basePaging);
         }
+
+        public async Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId)
+        {
+            var ticket = await _ticketRepository.GetQuery().Include(t => t.Owner).Include(t => t.TickerMessages.OrderByDescending(tm => tm.CreateDate))
+                .AsNoTracking()
+                .SingleOrDefaultAsync(t => t.Id == ticketId && t.OwnerId == userId);
+            return _mapper.Map<TicketDetailDTO>(ticket);
+        }
         #endregion
 
         #region dispose

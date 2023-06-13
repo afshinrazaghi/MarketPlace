@@ -17,6 +17,7 @@ namespace MarketPlace.Application.Profiles
                 .ForMember(destination => destination.TicketState, opt => opt.MapFrom(src => TicketState.UnderProgress))
                 .ForMember(destination => destination.IsReadByOwner, opt => opt.MapFrom(src => true));
             CreateMap<CreateTicketDTO, TicketMessage>();
+            CreateMap<Ticket, TicketDetailDTO>().ForMember(destination => destination.Ticket, opt => opt.MapFrom(src => src));
         }
     }
 }

@@ -56,11 +56,11 @@ namespace MarketPlace.Web.Areas.User.Controllers
         #endregion
 
         #region ticket-detail
-        [HttpGet("ticket-detail")]
+        [HttpGet("tickets/{ticketId}")]
         public async Task<IActionResult> TicketDetail(long ticketId)
         {
-            await Task.CompletedTask;
-            return View();
+            var ticket = await _contactService.GetTicketForShow(ticketId, User.GetUserId()!.Value);
+            return View(ticket);
         }
 
         #endregion

@@ -53,7 +53,7 @@
                                                     <td>@ticket.Id</td>
                                                     <td>@ticket.Title</td>
                                                     <td>@Html.DisplayFor(m=>ticket.TicketState)</td>
-                                                    <td><a href="#" class="view">جزئیات</a></td>
+                                                    <td><a asp-area="User" asp-controller="Ticket" asp-action="TicketDetail" asp-route-ticketId="@ticket.Id" class="view">جزئیات</a></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -61,7 +61,7 @@
                                 </div>
                             }
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
