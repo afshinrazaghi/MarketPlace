@@ -15,19 +15,8 @@ namespace MarketPlace.Web.Areas.User.Controllers
         }
         #endregion
 
-
-
-
         #region list
         [HttpGet("tickets")]
-        public async Task<IActionResult> Index(FilterTicketDTO filter)
-        {
-            filter.UserId = User.GetUserId();
-            filter.FilterTicketState = FilterTicketState.NotDeleted;
-            filter.FilterTicketOrder = FilterTicketOrder.CreateDate_DESC;
-            var data = await _contactService.FilterTicket(filter);
-            return View(data);
-        }
         #endregion
 
         #region create-ticket
@@ -55,6 +44,15 @@ namespace MarketPlace.Web.Areas.User.Controllers
                 }
             }
             return View(model);
+        }
+        #endregion
+
+        #region ticket-detail
+        [HttpGet("ticket-detail")]
+        public async Task<IActionResult> TicketDetail(long ticketId)
+        {
+            await Task.CompletedTask;
+            return View();
         }
         #endregion
     }

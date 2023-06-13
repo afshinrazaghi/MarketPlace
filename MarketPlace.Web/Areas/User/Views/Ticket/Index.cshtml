@@ -1,5 +1,5 @@
 ﻿@model MarketPlace.DataLayer.DTOs.Contacts.FilterTicketDTO
-
+@using MarketPlace.Application.Extensions;
 @{
     ViewData["Title"] = "تیکت ها";
 }
@@ -52,7 +52,7 @@
                                                 <tr>
                                                     <td>@ticket.Id</td>
                                                     <td>@ticket.Title</td>
-                                                    <td></td>
+                                                    <td>@ticket.TicketState.GetEnuName()</td>
                                                     <td><a href="#" class="view">جزئیات</a></td>
                                                 </tr>
                                             }
