@@ -10,7 +10,7 @@ namespace MarketPlace.Application.Extensions
 {
     public static class CommonExtensions
     {
-        public static string GetEnuName(this Enum myEnum)
+        public static string GetEnumName(this Enum myEnum)
         {
             var myEnumMemberInfo = myEnum.GetType().GetMember(myEnum.ToString()).FirstOrDefault();
             if (myEnumMemberInfo != null)

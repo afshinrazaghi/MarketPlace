@@ -52,7 +52,7 @@
                                                 <tr>
                                                     <td>@ticket.Id</td>
                                                     <td>@ticket.Title</td>
-                                                    <td>@ticket.TicketState.GetEnuName()</td>
+                                                    <td>@Html.DisplayFor(m=>ticket.TicketState)</td>
                                                     <td><a href="#" class="view">جزئیات</a></td>
                                                 </tr>
                                             }
