@@ -1,0 +1,7 @@
+﻿@using MarketPlace.DataLayer.DTOs.Contacts;
+@model AnswerTicketDTO;
+
+<form method="POST" asp-area="User" asp-controller="Ticket" asp-action="TicketDetail">
+    <input type="hidden" asp-for="Id" />
+    <textarea asp-for="Text" rows="5" cols="15" ></textarea>
+</form>

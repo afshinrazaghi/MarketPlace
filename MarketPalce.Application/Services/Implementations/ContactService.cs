@@ -58,7 +58,7 @@ namespace MarketPlace.Application.Services.Implementations
             var ticketMessage = _mapper.Map<TicketMessage>(model);
             ticketMessage.SenderId = userId;
 
-            ticket.TickerMessages = new List<TicketMessage> { ticketMessage };
+            ticket.TicketMessages = new List<TicketMessage> { ticketMessage };
 
 
             ticketMessage.SenderId = userId;
@@ -123,9 +123,9 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId)
         {
-            var ticket = await _ticketRepository.GetQuery().Include(t => t.Owner).Include(t => t.TickerMessages.OrderByDescending(tm => tm.CreateDate))
+            var ticket = await _ticketRepository.GetQuery().Include(t => t.Owner).Include(t => t.TicketMessages.OrderByDescending(tm => tm.CreateDate))
                 .AsNoTracking()
-                .SingleOrDefaultAsync(t => t.Id == ticketId && t.OwnerId == userId);
+                .SingleOrDefaultAsync(t => !t.IsDelete && t.Id == ticketId && t.OwnerId == userId);
             return _mapper.Map<TicketDetailDTO>(ticket);
         }
         #endregion
