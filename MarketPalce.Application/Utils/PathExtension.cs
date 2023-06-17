@@ -22,7 +22,11 @@ namespace MarketPlace.Application.Utils
         public static string UserAvatarThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/UserAvatar/thumb/");
         #endregion
 
-   
+        #region Upload
+        public static string UploadImage = "/img/upload/";
+        public static string UploadImageServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/upload/");
+        #endregion
+
 
         #region slider
         public static string SliderOrigin = "/img/slider/";
