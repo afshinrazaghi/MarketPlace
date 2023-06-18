@@ -18,12 +18,14 @@ namespace MarketPlace.Application.Services.Implementations
         #region constructor
         private readonly IGenericRepository<ContactUs> _contactUsRepository;
         private readonly IGenericRepository<Ticket> _ticketRepository;
+        private readonly IGenericRepository<TicketMessage> _ticketMessageRepository;
         private readonly IMapper _mapper;
-        public ContactService(IGenericRepository<ContactUs> genericRepository, IMapper mapper, IGenericRepository<Ticket> ticketRepository)
+        public ContactService(IGenericRepository<ContactUs> genericRepository, IMapper mapper, IGenericRepository<Ticket> ticketRepository, IGenericRepository<TicketMessage> ticketMessageRepository)
         {
             _contactUsRepository = genericRepository;
             _mapper = mapper;
             _ticketRepository = ticketRepository;
+            _ticketMessageRepository = ticketMessageRepository;
         }
         #endregion
 
@@ -134,6 +136,27 @@ namespace MarketPlace.Application.Services.Implementations
         public async ValueTask DisposeAsync()
         {
             await _contactUsRepository.DisposeAsync();
+        }
+
+        public async Task<AnswerTicketResult> AnswerTicket(AnswerTicketDTO answerTicket, long userId)
+        {
+            var ticket = await _ticketRepository.GetEntityById(answerTicket.Id);
+            if (ticket == null) return AnswerTicketResult.NotFound;
+            if (ticket.OwnerId != userId) return AnswerTicketResult.NotForUser;
+            var newTicketMessage = new TicketMessage
+            {
+                TicketId = answerTicket.Id,
+                Text = answerTicket.Text,
+                SenderId = userId,
+            };
+            await _ticketMessageRepository.AddEntity(newTicketMessage);
+
+            ticket.IsReadByOwner = true;
+            ticket.IsReadByAdmin = false;
+
+            await _ticketMessageRepository.SaveChanges();
+
+            return AnswerTicketResult.Success;
         }
         #endregion
     }

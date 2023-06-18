@@ -16,4 +16,11 @@ namespace MarketPlace.DataLayer.DTOs.Contacts
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Text { get; set; }
     }
+
+    public enum AnswerTicketResult
+    {
+        NotFound,
+        NotForUser,
+        Success
+    }
 }

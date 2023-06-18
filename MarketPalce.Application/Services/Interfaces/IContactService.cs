@@ -18,6 +18,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<FilterTicketDTO> FilterTicket(FilterTicketDTO filter);
 
         Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId);
+
+        public Task<AnswerTicketResult> AnswerTicket(AnswerTicketDTO answerTicket, long userId);
         #endregion
     }
 }

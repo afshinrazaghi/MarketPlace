@@ -51,7 +51,7 @@ $(document).ready(function () {
                         licenseKey: '',
                         simpleUpload: {
                             // The URL that the images are uploaded to.
-                            uploadUrl: '/Uploader/UploadImage'
+                            uploadUrl: '/Upload/UploadImage'
                         }
 
                     })

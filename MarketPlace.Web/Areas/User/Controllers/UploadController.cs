@@ -2,20 +2,21 @@
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Utils;
 using Newtonsoft.Json;
+using MarketPlace.Web.Controllers;
 
 namespace MarketPlace.Web.Areas.User.Controllers
 {
-    public class UploadController : Controller
+    public class UploadController : SiteBaseController
     {
-        [HttpPost("uploadImage")]
-        public IActionResult IActionResult(IFormFile upload, string CKEditorFuncName, string CKEditor, string langCode)
+        [HttpPost]
+        public IActionResult UploadImage(IFormFile upload, string? CKEditorFuncName, string? CKEditor, string? langCode)
         {
-            if (upload.Length < 0) return null;
+            var noImageMessage = "لطفا یک تصویر انتخاب کنید";
+
+            if (upload.Length < 0) return Json(new {uploaded=false, error = new { message = noImageMessage } });
             if (!upload.IsImage())
             {
-                var noImageMessage = "لطفا یک تصویر انتخاب کنید";
-                var noImage = JsonConvert.DeserializeObject("{'uploaded':0, 'error':{message: \" " + noImageMessage + " \"}");
-                return Json(noImage);
+                return Json(new { uploaded = false, error = new { message = noImageMessage } });
             }
 
             var fileName = Path.GetFileNameWithoutExtension(upload.FileName) + "_" + Guid.NewGuid().ToString("N") + Path.GetExtension(upload.FileName);

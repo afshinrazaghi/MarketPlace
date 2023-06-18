@@ -34,7 +34,7 @@ namespace MarketPlace.Web.Areas.User.Controllers
             return View();
         }
 
-        [HttpPost("create-ticket")]
+        [HttpPost("create-ticket"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTicket(CreateTicketDTO model)
         {
             if (ModelState.IsValid)
@@ -63,6 +63,34 @@ namespace MarketPlace.Web.Areas.User.Controllers
             return View(ticket);
         }
 
+        #endregion
+
+        #region answer-ticket
+        [HttpPost("answerTicket"),ValidateAntiForgeryToken]
+        public async Task<IActionResult> AnswerTicket(AnswerTicketDTO answer)
+        {
+            if (string.IsNullOrEmpty(answer.Text))
+            {
+                TempData[ErrorMessage] = "لطفا متن پیام خود را وارد نمائید";
+            }
+
+            var res = await _contactService.AnswerTicket(answer, User.GetUserId()!.Value);
+            switch (res)
+            {
+                case AnswerTicketResult.NotFound:
+                    TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                    return RedirectToAction("Index");
+                case AnswerTicketResult.NotForUser:
+                    TempData[ErrorMessage] = "عدم دسترسی";
+                    TempData[InfoMessage] = "در صورت تکرار این مورد، دسترسی شما به صورت کلی از سیستم قطع خواهد شد";
+                    return RedirectToAction("Index");
+                case AnswerTicketResult.Success:
+                    TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ثبت گردید";
+                    break;
+            }
+
+            return RedirectToAction("TicketDetail", "Ticket", new { area = "User", ticketId = answer.Id });
+        }
         #endregion
     }
 }
