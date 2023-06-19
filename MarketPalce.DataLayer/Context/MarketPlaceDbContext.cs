@@ -1,6 +1,7 @@
 ﻿using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Contacts;
 using MarketPlace.DataLayer.Entities.Site;
+using MarketPlace.DataLayer.Entities.Stores;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace MarketPlace.DataLayer.Context
 
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketMessage> TicketMessages { get; set; }
+        #endregion
+
+        #region store
+        public DbSet<Store> Stores { get; set; }
         #endregion
 
         #region site

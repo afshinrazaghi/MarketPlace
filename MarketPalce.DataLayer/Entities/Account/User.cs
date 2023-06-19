@@ -1,5 +1,6 @@
 ﻿using MarketPlace.DataLayer.Entities.Common;
 using MarketPlace.DataLayer.Entities.Contacts;
+using MarketPlace.DataLayer.Entities.Stores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,7 @@ namespace MarketPlace.DataLayer.Entities.Account
             ContactUses = new HashSet<ContactUs>();
             Tickets = new HashSet<Ticket>();
             TickerMessages = new HashSet<TicketMessage>();
+            Stores = new HashSet<Store>();
         }
         #region properties
         [Display(Name = "ایمیل")]
@@ -71,6 +73,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         public virtual ICollection<ContactUs> ContactUses { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<TicketMessage> TickerMessages { get; set; }
+        public virtual ICollection<Store> Stores { get; set; }
         #endregion
     }
 }
