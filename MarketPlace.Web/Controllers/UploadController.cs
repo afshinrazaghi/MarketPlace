@@ -2,9 +2,8 @@
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Utils;
 using Newtonsoft.Json;
-using MarketPlace.Web.Controllers;
 
-namespace MarketPlace.Web.Areas.User.Controllers
+namespace MarketPlace.Web.Controllers
 {
     public class UploadController : SiteBaseController
     {
@@ -13,14 +12,14 @@ namespace MarketPlace.Web.Areas.User.Controllers
         {
             var noImageMessage = "لطفا یک تصویر انتخاب کنید";
 
-            if (upload.Length < 0) return Json(new {uploaded=false, error = new { message = noImageMessage } });
+            if (upload.Length < 0) return Json(new { uploaded = false, error = new { message = noImageMessage } });
             if (!upload.IsImage())
             {
                 return Json(new { uploaded = false, error = new { message = noImageMessage } });
             }
 
             var fileName = Path.GetFileNameWithoutExtension(upload.FileName) + "_" + Guid.NewGuid().ToString("N") + Path.GetExtension(upload.FileName);
-            upload.AddImageToServer(fileName, PathExtension.UploadImageServer,null,null);
+            upload.AddImageToServer(fileName, PathExtension.UploadImageServer, null, null);
             return Json(new
             {
                 uploaded = true,
