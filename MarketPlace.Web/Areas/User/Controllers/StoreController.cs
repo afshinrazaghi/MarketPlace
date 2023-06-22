@@ -7,13 +7,16 @@ namespace MarketPlace.Web.Areas.User.Controllers
 {
     public class StoreController : UserBaseController
     {
+        #region constructor
         private readonly IStoreService _storeService;
 
         public StoreController(IStoreService storeService)
         {
             _storeService = storeService;
         }
+        #endregion
 
+        #region store request panel
         [HttpGet("request-store-panel")]
         public IActionResult RequestStorePanel()
         {
@@ -39,11 +42,21 @@ namespace MarketPlace.Web.Areas.User.Controllers
                         TempData[SuccessMessage] = "درخواست شما با موفقیت ثبت شد";
                         TempData[InfoMessage] = "فرآیند تایید اطلاعات شما در حال پیگیری می باشد ";
                         // todo: redirect to list of requests 
-                        break;
+                        return RedirectToAction("StoreRequests");
                 }
             }
 
             return View(request);
         }
+
+        #endregion
+
+        #region store requests
+        [HttpGet("store-requests")]
+        public async Task<IActionResult> StoreRequests()
+        {
+            return View();
+        }
+        #endregion
     }
 }

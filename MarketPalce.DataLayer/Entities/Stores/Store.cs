@@ -24,7 +24,6 @@ namespace MarketPlace.DataLayer.Entities.Stores
         [MaxLength(50, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Phone { get; set; }
         [Display(Name = "تلفن همراه")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string? Mobile { get; set; }
 
         [Display(Name = "آدرس")]
