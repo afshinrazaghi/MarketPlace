@@ -1,6 +1,80 @@
-﻿
+﻿@using MarketPlace.DataLayer.DTOs.Stores;
+@model FilterStoreDTO
 @{
     ViewData["Title"] = "درخواست های فروشندگی";
 }
 
 
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- my account start  -->
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <!-- Nav tabs -->
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade show active" id="tickets">
+                            <h3>@ViewData["Title"]</h3>
+                            @if (Model != null && Model.Stores != null && Model.Stores.Any())
+                            {
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>شناسه</th>
+                                                <th>نام فروشگاه</th>
+                                                <th>تلفن تماس</th>
+                                                <th>تلفن همراه</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var store in Model.Stores)
+                                            {
+                                                <tr>
+                                                    <td>@store.Id</td>
+                                                    <td>@store.StoreName</td>
+                                                    <td>@store.Phone</td>
+                                                    <td>@store.Mobile</td>
+                                                    <td><a asp-area="User" asp-controller="Store" asp-action="EditStore" asp-route-ticketId="@store.Id" class="view">ویرایش</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert-danger">
+                                    رکوردی یافت نشد
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- my account end   -->

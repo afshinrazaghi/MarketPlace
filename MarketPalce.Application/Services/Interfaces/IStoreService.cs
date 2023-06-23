@@ -12,7 +12,8 @@ namespace MarketPlace.Application.Services.Interfaces
     public interface IStoreService : IAsyncDisposable
     {
         #region store
-         Task<RequestStoreResult> RequestStore(RequestStoreDTO request, long userId);
+        Task<RequestStoreResult> RequestStore(RequestStoreDTO request, long userId);
+        Task<FilterStoreDTO> FilterStore(FilterStoreDTO filter);
         #endregion
     }
 }

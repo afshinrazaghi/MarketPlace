@@ -53,9 +53,13 @@ namespace MarketPlace.Web.Areas.User.Controllers
 
         #region store requests
         [HttpGet("store-requests")]
-        public async Task<IActionResult> StoreRequests()
+        public async Task<IActionResult> StoreRequests(FilterStoreDTO filter)
         {
-            return View();
+            filter.Take = 5;
+            filter.UserId = User.GetUserId()!.Value;
+            filter.StoreState = FilterStoreState.All;
+            var res = await _storeService.FilterStore(filter);
+            return View(res);
         }
         #endregion
     }
