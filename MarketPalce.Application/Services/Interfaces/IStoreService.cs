@@ -14,6 +14,9 @@ namespace MarketPlace.Application.Services.Interfaces
         #region store
         Task<RequestStoreResult> RequestStore(RequestStoreDTO request, long userId);
         Task<FilterStoreDTO> FilterStore(FilterStoreDTO filter);
+
+        Task<EditRequestStoreDTO?> GetRequestStoreForEdit(long id, long currentUserId);
+        Task<EditRequestStoreResult> EditRequestStore(EditRequestStoreDTO store, long currentUserId);
         #endregion
     }
 }

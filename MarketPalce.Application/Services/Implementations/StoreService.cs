@@ -1,4 +1,5 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using AutoMapper;
+using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.Stores;
 using MarketPlace.DataLayer.Entities.Account;
@@ -18,10 +19,12 @@ namespace MarketPlace.Application.Services.Implementations
         #region constructor
         private readonly IGenericRepository<Store> _storeService;
         private readonly IGenericRepository<User> _userRepository;
-        public StoreService(IGenericRepository<Store> storeService, IGenericRepository<User> userRepository)
+        private readonly IMapper _mapper;
+        public StoreService(IGenericRepository<Store> storeService, IGenericRepository<User> userRepository, IMapper mapper)
         {
             _storeService = storeService;
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         #endregion
 
@@ -88,6 +91,28 @@ namespace MarketPlace.Application.Services.Implementations
 
             return filter.SetStores(stores).SetPaging(basePaging);
         }
+
+        public async Task<EditRequestStoreDTO?> GetRequestStoreForEdit(long id, long currentUserId)
+        {
+            var store = await _storeService.GetEntityById(id);
+            if (store == null || store.UserId != currentUserId) return null;
+            return _mapper.Map<EditRequestStoreDTO>(store);
+        }
+
+        public async Task<EditRequestStoreResult> EditRequestStore(EditRequestStoreDTO storeDTO, long currentUserId)
+        {
+            var store = await _storeService.GetEntityById(storeDTO.Id);
+            if (store == null || store.UserId != currentUserId) return EditRequestStoreResult.NotFound;
+
+            store.StoreName = storeDTO.StoreName;
+            store.Phone = storeDTO.Phone;
+            store.Address = storeDTO.Address;
+            store.StoreAcceptanceState = StoreAcceptanceState.UnderProgress;
+            _storeService.EditEntity(store);
+            await _storeService.SaveChanges();
+            return EditRequestStoreResult.Success;
+        }
+
         #endregion
 
         #region dispose
@@ -95,6 +120,7 @@ namespace MarketPlace.Application.Services.Implementations
         {
             await _storeService.DisposeAsync();
         }
+
 
 
         #endregion

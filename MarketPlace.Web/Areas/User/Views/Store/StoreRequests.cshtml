@@ -44,7 +44,7 @@
                                                 <th>شناسه</th>
                                                 <th>نام فروشگاه</th>
                                                 <th>تلفن تماس</th>
-                                                <th>تلفن همراه</th>
+                                                <th>وضعیت</th>
                                                 <th>دستورات</th>
                                             </tr>
                                         </thead>
@@ -55,8 +55,8 @@
                                                     <td>@store.Id</td>
                                                     <td>@store.StoreName</td>
                                                     <td>@store.Phone</td>
-                                                    <td>@store.Mobile</td>
-                                                    <td><a asp-area="User" asp-controller="Store" asp-action="EditStore" asp-route-ticketId="@store.Id" class="view">ویرایش</a></td>
+                                                    <td>@Html.DisplayFor(m=>store.StoreAcceptanceState)</td>
+                                                    <td><a asp-area="User" asp-controller="Store" asp-action="EditRequestStore" asp-route-id="@store.Id" class="view">ویرایش</a></td>
                                                 </tr>
                                             }
                                         </tbody>

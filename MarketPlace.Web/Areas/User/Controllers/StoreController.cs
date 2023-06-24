@@ -62,5 +62,37 @@ namespace MarketPlace.Web.Areas.User.Controllers
             return View(res);
         }
         #endregion
+
+        #region edit request store
+        [HttpGet("edit-request-store/{id}")]
+        public async Task<IActionResult> EditRequestStore(long id)
+        {
+            var storeRequest = await _storeService.GetRequestStoreForEdit(id, User.GetUserId()!.Value);
+            return View(storeRequest);
+        }
+
+        [HttpPost("edit-request-store/{id}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRequestStore(EditRequestStoreDTO request)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = await _storeService.EditRequestStore(request, User.GetUserId()!.Value);
+                switch (res)
+                {
+                    case EditRequestStoreResult.NotFound:
+                        TempData[ErrorMessage] = "اطلاعات مورد نظر یافت نشد";
+                        break;
+                    case EditRequestStoreResult.Success:
+                        TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ویرایش شد";
+                        TempData[InfoMessage] = "فرآیند تایید اطلاعات از سر گرفته شد";
+                        return RedirectToAction("StoreRequests");
+                }
+
+            }
+
+            return View(request);
+
+        }
+        #endregion
     }
 }
