@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\ViewComponents\" />
     <Folder Include="wwwroot\Content\Images\UserAvatar\Origin\" />
     <Folder Include="wwwroot\img\defaults\" />
   </ItemGroup>
