@@ -1,0 +1,83 @@
+﻿@using MarketPlace.DataLayer.DTOs.Stores;
+@model FilterStoreDTO
+@{
+    ViewData["Title"] = "درخواست های فروشندگی";
+}
+
+<div class="col-xs-4">
+    <div class="well with-header with-footer">
+        <div class="header bordered-success">
+            فیلتر ها
+        </div>
+
+    </div>
+</div>
+
+<div class="col-xs-8">
+    <div class="well with-header with-footer">
+        <div class="header bordered-success">
+            @ViewData["Title"]
+        </div>
+        <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            شناسه
+                        </th>
+                        <th scope="col">
+                            نام فروشگاه
+                        </th>
+                        <th scope="col">
+                            تلفن
+                        </th>
+                        <th scope="col">
+                            وضعیت تایید
+                        </th>
+                        <th scope="col">
+                            عملیات
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Stores != null && Model.Stores.Any())
+                    {
+                        foreach (var store in Model.Stores)
+                        {
+                            <tr>
+                                <td>
+                                    @store.Id
+                                </td>
+                                <td>
+                                    @store.StoreName
+                                </td>
+                                <td>
+                                    @store.Phone
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m=>store.StoreAcceptanceState)
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <p>
+                                هیچ رکوردی یافت نشد
+                            </p>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="dataTables_paginate paging_bootstrap" id="simpledatatable_paginate"><ul class="pagination"><li class="prev disabled"><a href="#">Prev</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li><li class="next"><a href="#">Next</a></li></ul></div>
+        </div>
+    </div>
+
+</div>
+
