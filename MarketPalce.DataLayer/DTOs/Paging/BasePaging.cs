@@ -24,5 +24,10 @@ namespace MarketPlace.DataLayer.DTOs.Paging
         public int Skip { get; set; }
         public int Take { get; set; }
         public int HowManyBeforeAndAfter { get; set; }
+
+        public BasePaging GetCurrentPaging()
+        {
+            return this;
+        }
     }
 }

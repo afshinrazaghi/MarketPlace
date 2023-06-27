@@ -20,6 +20,7 @@ namespace MarketPlace.Web.Areas.Admin.Controllers
         public async Task<IActionResult> StoreRequests(FilterStoreDTO filter)
         {
             filter.UserId = User.GetUserId()!.Value;
+            filter.Take = 1;
             return View(await _storeService.FilterStore(filter));
         }
         #endregion    

@@ -86,7 +86,7 @@ namespace MarketPlace.Application.Services.Implementations
 
             #region pagings
             var basePaging = Pager.Build(filter.CurrentPage, await query.CountAsync(), filter.Take, filter.HowManyBeforeAndAfter);
-            var stores = await query.ToListAsync();
+            var stores = await query.Paging(basePaging).ToListAsync();
             #endregion
 
             return filter.SetStores(stores).SetPaging(basePaging);
