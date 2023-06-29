@@ -22,6 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewComponents\" />
+    <Folder Include="Areas\Store\Controllers\" />
+    <Folder Include="Areas\Store\Data\" />
+    <Folder Include="Areas\Store\Models\" />
+    <Folder Include="Areas\Store\Views\" />
     <Folder Include="wwwroot\Content\Images\UserAvatar\Origin\" />
     <Folder Include="wwwroot\img\defaults\" />
   </ItemGroup>
