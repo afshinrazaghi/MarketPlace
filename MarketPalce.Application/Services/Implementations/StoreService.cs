@@ -113,13 +113,29 @@ namespace MarketPlace.Application.Services.Implementations
             return EditRequestStoreResult.Success;
         }
 
+
+        public async Task<bool> AcceptStoreRequest(long requestId)
+        {
+            var request = await _storeService.GetEntityById(requestId);
+            if (request != null)
+            {
+                request.StoreAcceptanceState = StoreAcceptanceState.Accepted;
+                _storeService.EditEntity(request);
+                await _storeService.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         #endregion
+
+
 
         #region dispose
         public async ValueTask DisposeAsync()
         {
             await _storeService.DisposeAsync();
         }
+
 
 
 

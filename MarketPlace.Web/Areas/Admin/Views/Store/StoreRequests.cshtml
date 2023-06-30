@@ -4,6 +4,10 @@
     ViewData["Title"] = "درخواست های فروشندگی";
 }
 
+@section scripts{
+    <script src="/admin/js/store/store.js"></script>
+}
+
 <div class="col-xs-4">
     <div class="well with-header with-footer">
         <div class="header bordered-success">
@@ -79,7 +83,7 @@
                     {
                         foreach (var store in Model.Stores)
                         {
-                            <tr>
+                            <tr id="ajax-url-item-@store.Id">
                                 <td>
                                     @store.Id
                                 </td>
@@ -93,6 +97,10 @@
                                     @Html.DisplayFor(m=>store.StoreAcceptanceState)
                                 </td>
                                 <td>
+                                    @if(store.StoreAcceptanceState != MarketPlace.DataLayer.Entities.Stores.StoreAcceptanceState.Accepted)
+                                    {
+                                        <a class="btn btn-success" onclick="confirmStore('@Url.Action("AcceptStoreRequest","Store",new {area="Admin"})',@store.Id)">تایید اطلاعات</a>
+                                    }
                                 </td>
                             </tr>
                         }

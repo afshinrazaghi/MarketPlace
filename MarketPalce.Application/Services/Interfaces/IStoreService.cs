@@ -17,6 +17,7 @@ namespace MarketPlace.Application.Services.Interfaces
 
         Task<EditRequestStoreDTO?> GetRequestStoreForEdit(long id, long currentUserId);
         Task<EditRequestStoreResult> EditRequestStore(EditRequestStoreDTO store, long currentUserId);
+        Task<bool> AcceptStoreRequest(long requestId);
         #endregion
     }
 }
