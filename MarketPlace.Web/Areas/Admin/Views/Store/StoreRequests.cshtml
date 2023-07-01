@@ -1,4 +1,5 @@
 ﻿@using MarketPlace.DataLayer.DTOs.Stores;
+@using MarketPlace.DataLayer.DTOs.Common;
 @model FilterStoreDTO
 @{
     ViewData["Title"] = "درخواست های فروشندگی";
@@ -6,6 +7,7 @@
 
 @section scripts{
     <script src="/admin/js/store/store.js"></script>
+    <partial name="_JqueryValidators" />
 }
 
 <div class="col-xs-4">
@@ -97,9 +99,13 @@
                                     @Html.DisplayFor(m=>store.StoreAcceptanceState)
                                 </td>
                                 <td>
-                                    @if(store.StoreAcceptanceState != MarketPlace.DataLayer.Entities.Stores.StoreAcceptanceState.Accepted)
+                                    @if (store.StoreAcceptanceState != MarketPlace.DataLayer.Entities.Stores.StoreAcceptanceState.Accepted)
                                     {
                                         <a class="btn btn-success" onclick="confirmStore('@Url.Action("AcceptStoreRequest","Store",new {area="Admin"})',@store.Id)">تایید اطلاعات</a>
+                                    }
+                                    @if (store.StoreAcceptanceState != MarketPlace.DataLayer.Entities.Stores.StoreAcceptanceState.Rejected)
+                                    {
+                                        <a class="btn btn-danger" data-toggle="modal" data-target=".reject-modal-@store.Id">رد کردن اطلاعات</a>
                                     }
                                 </td>
                             </tr>
@@ -123,3 +129,28 @@
 
 </div>
 
+@if (Model.Stores != null && Model.Stores.Any())
+{
+    foreach (var store in Model.Stores)
+    {
+        <!--LArge Modal Templates-->
+        <div class="modal fade reject-modal-@store.Id" id="reject-modal-@store.Id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">`
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-area="Admin" asp-controller="Store" asp-action="RejectStoreRequest" asp-antiforgery="true" data-ajax="true" data-method="post" data-ajax-success="OnSuccessRejectItem">
+                            <partial name="_RejectItemPartial" model="@(new RejectItemDTO{Id = store.Id})" />
+                            <button type="submit" class="bnt btn-danger">رد کردن اطلاعات</button>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!--End Large Modal Templates-->
+    }
+}

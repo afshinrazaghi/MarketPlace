@@ -1,4 +1,5 @@
-﻿using MarketPlace.DataLayer.DTOs.Stores;
+﻿using MarketPlace.DataLayer.DTOs.Common;
+using MarketPlace.DataLayer.DTOs.Stores;
 using MarketPlace.DataLayer.Entities.Stores;
 using MarketPlace.DataLayer.Repository;
 using System;
@@ -18,6 +19,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<EditRequestStoreDTO?> GetRequestStoreForEdit(long id, long currentUserId);
         Task<EditRequestStoreResult> EditRequestStore(EditRequestStoreDTO store, long currentUserId);
         Task<bool> AcceptStoreRequest(long requestId);
+        Task<bool> RejectStoreRequest(RejectItemDTO rejectItem);
         #endregion
     }
 }

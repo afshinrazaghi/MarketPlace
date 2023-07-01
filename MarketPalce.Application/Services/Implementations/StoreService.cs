@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.Stores;
 using MarketPlace.DataLayer.Entities.Account;
@@ -126,6 +127,22 @@ namespace MarketPlace.Application.Services.Implementations
             }
             return false;
         }
+
+        public async Task<bool> RejectStoreRequest(RejectItemDTO rejectItem)
+        {
+            var request = await _storeService.GetEntityById(rejectItem.Id);
+            if (request != null)
+            {
+                request.StoreAcceptanceState = StoreAcceptanceState.Rejected;
+                request.StoreAcceptanceDescription = rejectItem.RejectMessage;
+                _storeService.EditEntity(request);
+                await _storeService.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+
         #endregion
 
 
@@ -135,6 +152,7 @@ namespace MarketPlace.Application.Services.Implementations
         {
             await _storeService.DisposeAsync();
         }
+
 
 
 

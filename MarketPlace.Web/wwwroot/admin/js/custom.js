@@ -17,4 +17,15 @@ function FillCurrentPage(currentPage) {
     $("#filter-form").submit();
 }
 
+function OnSuccessRejectItem(res) {
+    if (res.status === 'Success') {
+        showMessage('اعلان موفقیت', res.message);
+        $("#ajax-url-item-" + res.data.id + " a.btn-danger").hide();
+        $("#reject-modal-" + res.data.id).modal('toggle');
+    }
+    else {
+        showMessage('اعلان عدم موفقیت', res.message);
+    }
+}
+
 

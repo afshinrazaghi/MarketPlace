@@ -1,4 +1,5 @@
 ﻿using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Stores;
 using MarketPlace.Web.Models;
 using MarketPlace.Web.PresentationExtensions;
@@ -33,6 +34,22 @@ namespace MarketPlace.Web.Areas.Admin.Controllers
             if (res)
             {
                 return JsonResult(JsonResultStatus.Success, "درخواست مورد نظر با موفقیت تایید شد", null);
+            }
+            else
+            {
+                return JsonResult(JsonResultStatus.Danger, "اطلاعاتی با این مشخصات یافت نشد", null);
+            }
+        }
+        #endregion
+
+        #region reject store request
+        [HttpPost("reject-store-request")]
+        public async Task<IActionResult> RejectStoreRequest(RejectItemDTO rejectItem)
+        {
+            var res = await _storeService.RejectStoreRequest(rejectItem);
+            if (res)
+            {
+                return JsonResult(JsonResultStatus.Success, "درخواست مورد نظر با موفقیت رد شد", rejectItem);
             }
             else
             {
