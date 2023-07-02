@@ -1,5 +1,6 @@
 ﻿using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,10 @@ namespace MarketPlace.DataLayer.Entities.Stores
 {
     public class Store:BaseEntity
     {
+        public Store()
+        {
+            Products = new HashSet<Product>();
+        }
         #region properties
         public long UserId { get; set; }
         [Display(Name ="نام فروشگاه")]
@@ -49,7 +54,8 @@ namespace MarketPlace.DataLayer.Entities.Stores
         #endregion
 
         #region relations
-        public User User { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         #endregion
     }
 

@@ -1,5 +1,6 @@
 ﻿using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Contacts;
+using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Entities.Stores;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,11 @@ namespace MarketPlace.DataLayer.Context
         public DbSet<SiteSetting> SiteSettings { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<SiteBanner> SiteBanners { get; set; }
+        #endregion
+
+        #region product
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
         #endregion
 
         #region on model creating
