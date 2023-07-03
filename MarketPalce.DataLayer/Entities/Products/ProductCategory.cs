@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace MarketPlace.DataLayer.Entities.Products
 {
-    public class ProductCategory:BaseEntity
+    public class ProductCategory : BaseEntity
     {
         public ProductCategory()
         {
             Products = new HashSet<Product>();
+            ProductSelectedCategories = new HashSet<ProductSelectedCategory>();
         }
         #region properties
 
-        [Display(Name ="عنوان")]
+        [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Title { get; set; }
@@ -34,6 +35,7 @@ namespace MarketPlace.DataLayer.Entities.Products
 
         #region relations
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<ProductSelectedCategory> ProductSelectedCategories { get; set; }
         #endregion
     }
 }

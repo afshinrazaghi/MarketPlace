@@ -42,6 +42,7 @@ namespace MarketPlace.DataLayer.Context
         #region product
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductSelectedCategory> ProductSelectedCategories { get; set; }
         #endregion
 
         #region on model creating

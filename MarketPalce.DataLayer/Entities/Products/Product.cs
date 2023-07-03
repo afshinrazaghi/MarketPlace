@@ -13,6 +13,12 @@ namespace MarketPlace.DataLayer.Entities.Products
 {
     public class Product : BaseEntity
     {
+        #region constructor
+        public Product()
+        {
+            ProductSelectedCategories = new HashSet<ProductSelectedCategory>();
+        }
+        #endregion
         #region properties
         [Display(Name = "عنوان محصول")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -46,6 +52,7 @@ namespace MarketPlace.DataLayer.Entities.Products
 
         [ForeignKey(nameof(ProductStoreId))]
         public virtual Store ProductStore { get; set; }
+        public virtual ICollection<ProductSelectedCategory> ProductSelectedCategories { get; set; }
         #endregion
     }
 

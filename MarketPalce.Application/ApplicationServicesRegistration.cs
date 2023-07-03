@@ -22,6 +22,7 @@ namespace MarketPlace.Application
             services.AddScoped<ISiteService, SiteService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             return services;
         }
