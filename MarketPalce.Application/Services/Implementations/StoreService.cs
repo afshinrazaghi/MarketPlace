@@ -142,13 +142,19 @@ namespace MarketPlace.Application.Services.Implementations
             return false;
         }
 
+		public async Task<Store?> GetLastActiveStoreByUserId(long userId)
+        {
+            var store = await  _storeService.GetQuery().OrderByDescending(f=>f.CreateDate).FirstOrDefaultAsync(store=>store.StoreAcceptanceState == StoreAcceptanceState.Accepted && store.UserId == userId);
+            return store;
+        }
 
-        #endregion
+
+		#endregion
 
 
 
-        #region dispose
-        public async ValueTask DisposeAsync()
+		#region dispose
+		public async ValueTask DisposeAsync()
         {
             await _storeService.DisposeAsync();
         }

@@ -1,0 +1,14 @@
+﻿@using MarketPlace.DataLayer.DTOs.Products;
+@model FilterProductDTO
+@{
+    ViewData["Title"] = "لیست محصولات";
+}
+
+@if(Model != null && Model.Products.Any())
+{
+    foreach(var product in Model.Products)
+    {
+        <li>@product.Title</li>
+    }
+}
+
