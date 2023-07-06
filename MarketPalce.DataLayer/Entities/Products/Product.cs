@@ -43,6 +43,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Display(Name = "توضیحات پذیرش/عدم پذیرش محصول")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string? ProductAcceptanceDescription { get; set; }
+        public string ImageFileName { get; set; }
 
         #endregion
 
@@ -58,8 +59,11 @@ namespace MarketPlace.DataLayer.Entities.Products
 
     public enum ProductAcceptanceState
     {
+        [Display(Name = "در حال بررسی")]
         UnderProgress,
+        [Display(Name = "تایید شده")]
         Accepted,
+        [Display(Name = "رد شده")]
         Rejected
     }
 }

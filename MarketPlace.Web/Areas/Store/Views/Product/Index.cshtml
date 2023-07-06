@@ -1,14 +1,79 @@
 ﻿@using MarketPlace.DataLayer.DTOs.Products;
+@using MarketPlace.Application.Utils;
 @model FilterProductDTO
 @{
     ViewData["Title"] = "لیست محصولات";
 }
 
-@if(Model != null && Model.Products.Any())
-{
-    foreach(var product in Model.Products)
-    {
-        <li>@product.Title</li>
-    }
-}
 
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- my account start  -->
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <!-- Nav tabs -->
+                    @await Component.InvokeAsync("StoreSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade show active" id="products">
+                            <h3>@ViewData["Title"]</h3>
+                            @if (Model != null && Model.Products != null && Model.Products.Any())
+                            {
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>عنوان</th>
+                                                <th>وضعیت</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var product in Model.Products)
+                                            {
+                                                <tr>
+                                                    <td><img src="@(PathExtension.ProductImageOrigin + product.ImageFileName)" width="75"/></td>
+                                                    <td>@product.Title</td>
+                                                    <td>@Html.DisplayFor(m=>product.ProductAcceptanceState)</td>
+                                                    <td><a asp-area="ُStore" asp-controller="Product" asp-action="ProductDetail" asp-route-ticketId="@product.Id" class="view">جزئیات</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert-danger">
+                                    رکوردی یافت نشد
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- my account end   -->
