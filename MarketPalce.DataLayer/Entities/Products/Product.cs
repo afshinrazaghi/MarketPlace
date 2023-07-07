@@ -17,6 +17,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         public Product()
         {
             ProductSelectedCategories = new HashSet<ProductSelectedCategory>();
+            ProductColors = new HashSet<ProductColor>();
         }
         #endregion
         #region properties
@@ -24,11 +25,15 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string Title { get; set; }
+
         [Display(Name = "قیمت محصول")]
         [Precision(18, 2)]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public decimal Price { get; set; }
+
+        [Display(Name = "فروشگاه محصول")]
         public long ProductStoreId { get; set; }
+        [Display(Name = "دسته بندی محصول")]
         public long ProductCategoryId { get; set; }
         [Display(Name = "توضیحات کوتاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -43,6 +48,10 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Display(Name = "توضیحات پذیرش/عدم پذیرش محصول")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string? ProductAcceptanceDescription { get; set; }
+
+        [Display(Name = "")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(500, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
         public string ImageFileName { get; set; }
 
         #endregion
@@ -54,6 +63,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         [ForeignKey(nameof(ProductStoreId))]
         public virtual Store ProductStore { get; set; }
         public virtual ICollection<ProductSelectedCategory> ProductSelectedCategories { get; set; }
+        public virtual ICollection<ProductColor> ProductColors { get; set; }
         #endregion
     }
 

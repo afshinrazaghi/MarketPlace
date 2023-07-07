@@ -1,4 +1,5 @@
 ﻿using MarketPlace.DataLayer.DTOs.Products;
+using MarketPlace.DataLayer.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,13 @@ namespace MarketPlace.Application.Services.Interfaces
 {
     public interface IProductService : IAsyncDisposable
     {
-        #region filter products
+        #region products
         Task<FilterProductDTO> FilterProduct(FilterProductDTO filter);
+        #endregion
+
+        #region product categoreis
+
+        Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId);
         #endregion
     }
 }
