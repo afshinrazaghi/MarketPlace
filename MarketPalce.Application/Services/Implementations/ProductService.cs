@@ -1,4 +1,5 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using AutoMapper;
+using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.Products;
@@ -18,11 +19,13 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<Product> _productRepository;
         private readonly IGenericRepository<ProductCategory> _productCategoryRepository;
         private readonly IGenericRepository<ProductSelectedCategory> _productSelectedCategoryRepository;
-        public ProductService(IGenericRepository<Product> productRepository = null, IGenericRepository<ProductCategory> productCategoryRepository = null, IGenericRepository<ProductSelectedCategory> productSelectedCategoryRepository = null)
+        private readonly IMapper _mapper;
+        public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository, IGenericRepository<ProductSelectedCategory> productSelectedCategoryRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
             _productSelectedCategoryRepository = productSelectedCategoryRepository;
+            _mapper = mapper;
         }
         #endregion
 
@@ -69,13 +72,38 @@ namespace MarketPlace.Application.Services.Implementations
             return filter;
         }
 
+
+        public async Task<CreateProductResult> CreateProduct(CreateProductDTO product, string imageFileName, long storeId)
+        {
+            //create product
+            var newProduct = _mapper.Map<Product>(product);
+            newProduct.ImageFileName = imageFileName;
+            newProduct.ProductStoreId = storeId;
+            await _productRepository.AddEntity(newProduct);
+            await _productRepository.SaveChanges();
+
+            //create proudct categories
+
+
+            //create product colors
+
+            return CreateProductResult.Success;
+        }
+
+
+        #endregion
+
+        #region product categories
         public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId)
         {
             return await _productCategoryRepository.GetQuery().Where(productCategory =>
                         productCategory.IsActive && !productCategory.IsDelete && productCategory.ParentId == parentId).ToListAsync();
         }
 
-
+        public async Task<List<ProductCategory>> GetAllActiveProductCategories()
+        {
+            return await _productCategoryRepository.GetQuery().Where(pc => pc.IsActive && !pc.IsDelete).ToListAsync();
+        }
         #endregion
 
 
@@ -86,6 +114,9 @@ namespace MarketPlace.Application.Services.Implementations
             await _productCategoryRepository.DisposeAsync();
             await _productSelectedCategoryRepository.DisposeAsync();
         }
+
+
+
 
 
 

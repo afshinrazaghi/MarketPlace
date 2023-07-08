@@ -13,7 +13,6 @@
 
 
 $(document).ready(function () {
-    debugger;
     let editors = $("[ckeditor]");
     if (editors.length > 0) {
         $.getScript('/js/ckeditor.js', function () {

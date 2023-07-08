@@ -35,19 +35,19 @@ namespace MarketPlace.Web.Areas.Store.Controllers
         [HttpGet("create-product")]
         public async Task<IActionResult> CreateProduct()
         {
-            ViewBag.MainCategories =await _productService.GetAllProductCategoriesByParentId(null);
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
             return View();
         }
 
-        [HttpPost("create-product"),ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProduct(CreateProductDTO product)
+        [HttpPost("create-product"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProduct(CreateProductDTO product, IFormFile productImage)
         {
             if (ModelState.IsValid)
             {
-
+                var res = await _productService.CreateProduct(product, "", User.GetUserId()!.Value);
             }
 
-            ViewBag.MainCategories = await _productService.GetAllProductCategoriesByParentId(null);
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
             return View();
         }
         #endregion

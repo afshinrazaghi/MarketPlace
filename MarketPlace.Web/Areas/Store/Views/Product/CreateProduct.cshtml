@@ -1,7 +1,116 @@
-﻿
+﻿@using MarketPlace.DataLayer.DTOs.Products;
+@using MarketPlace.DataLayer.Entities.Products;
+@model CreateProductDTO;
 @{
-    ViewData["Title"] = "CreateProduct";
+    ViewData["Title"] = "ایجاد محصولات";
+    var categories = ViewBag.Categories as List<ProductCategory>;
 }
 
-<h2>CreateProduct</h2>
 
+@section scripts{
+    <partial name="_JqueryValidators" />
+}
+
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- my account start  -->
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <!-- Nav tabs -->
+                    @await Component.InvokeAsync("StoreSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade show active" id="account-details">
+                            <h3>@ViewData["Title"]</h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="Store" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data">
+                                            <label>نام محصول</label>
+                                            <input asp-for="Title" />
+                                            <span asp-validation-for="Title" class="text-danger"></span>
+                                            <br />
+
+                                            <label>قیمت</label>
+                                            <input asp-for="Price" />
+                                            <span asp-validation-for="Price" class="text-danger"></span>
+                                            <br />
+
+                                            <label>توضیحات کوتاه محصول</label>
+                                            <textarea class="form-control" rows="8" asp-for="ShortDescription"></textarea>
+                                            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                                            <br />
+
+                                            <label>توضیحات محصول</label>
+                                            <textarea ckeditor="1" class="form-control" asp-for="Description"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                            <br />
+
+                                            <div class="form-group">
+                                                <input asp-for="IsActive" name="@nameof(Model.IsActive)" type="checkbox" value="true" /> فعال / غیرفعال
+                                            </div>
+                                            <br />
+                                           
+
+                                            @if (categories != null && categories.Any())
+                                            {
+                                                <ul>
+                                                    @foreach (var category in categories.Where(c => c.ParentId == null))
+                                                    {
+                                                        <li>
+                                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(category.Id)" /> @category.Title
+                                                            @if (categories.Any(subCategory => subCategory.ParentId == category.Id))
+                                                            {
+                                                                <ul class="ml-4">
+                                                                    @foreach (var subCategory in categories.Where(c => c.ParentId == category.Id))
+                                                                    {
+                                                                        <li >
+                                                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(subCategory.Id)" /> @subCategory.Title
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+
+                                            <div class="col-md-9">
+                                                <input name="productImage" type="file" />
+                                            </div>
+
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">افزودن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- my account end   -->

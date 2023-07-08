@@ -33,9 +33,16 @@ namespace MarketPlace.DataLayer.DTOs.Products
 
         public List<CreateProductColorDTO> ProductColors { get; set; }
 
-        [Display(Name ="دسته بندی محصول")]
-        public long ProductCategoryId { get; set; }
-
+        [Display(Name = "دسته بندی های محصول")]
+        public List<int> ProductCategories { get; set; }
 
     }
+
+    public enum CreateProductResult
+    {
+        Success,
+        Error
+    }
+
+
 }
