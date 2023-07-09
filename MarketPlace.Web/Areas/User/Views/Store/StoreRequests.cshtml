@@ -62,6 +62,10 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <form asp-area="User" asp-controller="Store" asp-action="StoreRequests" method="get" id="filter-form">
+                                   <input type="hidden" asp-for="CurrentPage" />
+                                   <partial name="~/Views/Shared/_PagingPartial.cshtml" model="Model.GetCurrentPaging()"/>
+                               </form>
                             }
                             else
                             {

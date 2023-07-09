@@ -1,0 +1,23 @@
+﻿@using MarketPlace.DataLayer.DTOs.Paging;
+@model BasePaging
+<div class="shop_toolbar t_bottom">
+    <div class="pagination">
+        <ul>
+            @if (Model.First < Model.CurrentPage)
+            {
+                <li class="cursor-pointer"><a onclick="FillCurrentPage(@(Model.CurrentPage - 1))">قبلی</a></li>
+            }
+
+            @for (int i = Model.First; i <= Model.Last; i++)
+            {
+                <li class="@(Model.CurrentPage == i ? "current" : "") cursor-pointer"><a onclick="FillCurrentPage(@(i))">@i<span class="sr-only">(current)</span></a></li>
+            }
+
+            @if (Model.Last > Model.CurrentPage)
+            {
+                <li class="cursor-pointer"><a onclick="FillCurrentPage(@(Model.CurrentPage +1))">بعدی</a></li>
+            }
+        </ul>
+    </div>
+</div>
+
