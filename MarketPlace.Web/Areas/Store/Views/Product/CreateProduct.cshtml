@@ -1,15 +1,13 @@
-﻿@using MarketPlace.DataLayer.DTOs.Products;
+﻿@using MarketPlace.DataLayer.DTOs.JsTree;
+@using MarketPlace.DataLayer.DTOs.Products;
 @using MarketPlace.DataLayer.Entities.Products;
 @model CreateProductDTO;
 @{
     ViewData["Title"] = "ایجاد محصولات";
-    var categories = ViewBag.Categories as List<ProductCategory>;
+    var categories = ViewBag.Categories as List<JsTreeDTO>;
 }
 
 
-@section scripts{
-    <partial name="_JqueryValidators" />
-}
 
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -69,30 +67,37 @@
                                                 <input asp-for="IsActive" name="@nameof(Model.IsActive)" type="checkbox" value="true" /> فعال / غیرفعال
                                             </div>
                                             <br />
-                                           
 
-                                            @if (categories != null && categories.Any())
+                                            <div class="m-2">
+                                                <div id="categories"></div>
+                                            </div>
+
+
+
+
+
+                                            @* @if (categories != null && categories.Any())
                                             {
-                                                <ul>
-                                                    @foreach (var category in categories.Where(c => c.ParentId == null))
-                                                    {
-                                                        <li>
-                                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(category.Id)" /> @category.Title
-                                                            @if (categories.Any(subCategory => subCategory.ParentId == category.Id))
-                                                            {
-                                                                <ul class="ml-4">
-                                                                    @foreach (var subCategory in categories.Where(c => c.ParentId == category.Id))
-                                                                    {
-                                                                        <li >
-                                                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(subCategory.Id)" /> @subCategory.Title
-                                                                        </li>
-                                                                    }
-                                                                </ul>
-                                                            }
-                                                        </li>
-                                                    }
-                                                </ul>
+                                            <ul>
+                                            @foreach (var category in categories.Where(c => c.ParentId == null))
+                                            {
+                                            <li>
+                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(category.Id)" /> @category.Title
+                                            @if (categories.Any(subCategory => subCategory.ParentId == category.Id))
+                                            {
+                                            <ul class="ml-4">
+                                            @foreach (var subCategory in categories.Where(c => c.ParentId == category.Id))
+                                            {
+                                            <li >
+                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(subCategory.Id)" /> @subCategory.Title
+                                            </li>
                                             }
+                                            </ul>
+                                            }
+                                            </li>
+                                            }
+                                            </ul>
+                                            }*@
 
                                             <div class="col-md-9">
                                                 <input name="productImage" type="file" />
@@ -114,3 +119,27 @@
     </div>
 </section>
 <!-- my account end   -->
+@section scripts{
+    <partial name="_JqueryValidators" />
+    
+    <script>
+
+        $.get('@Url.Action("GetProductCategories","Product", new {area = "Store"})').then(function (res) {
+            debugger;
+            if (res.status == "Success"){
+                let data = res.data;
+                $("#categories").jstree(
+                    {
+                        "core":
+                        {
+                            data: data
+                        },
+                        "checkbox": {
+                            "keep_selected_style": false
+                        },
+                        "plugins": ["wholerow", "checkbox"]
+                    })
+            }
+        });
+    </script>
+}

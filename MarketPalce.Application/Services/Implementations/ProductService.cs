@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.DataLayer.DTOs.JsTree;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.Products;
@@ -104,6 +105,13 @@ namespace MarketPlace.Application.Services.Implementations
         {
             return await _productCategoryRepository.GetQuery().Where(pc => pc.IsActive && !pc.IsDelete).ToListAsync();
         }
+
+
+        public async Task<List<JsTreeDTO>> GetAllActiveProductCategoriesForJsTree()
+        {
+            return await _mapper.ProjectTo<JsTreeDTO>(_productCategoryRepository.GetQuery().Where(pc => pc.IsActive && !pc.IsDelete)).ToListAsync();
+        }
+
         #endregion
 
 
@@ -114,6 +122,8 @@ namespace MarketPlace.Application.Services.Implementations
             await _productCategoryRepository.DisposeAsync();
             await _productSelectedCategoryRepository.DisposeAsync();
         }
+
+
 
 
 

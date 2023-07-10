@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using MarketPlace.Application;
+using Microsoft.AspNetCore.DataProtection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region config services
@@ -26,6 +28,11 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 #region config database
 builder.Services.AddDbContext<MarketPlaceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MarketPlaceConnection")));
 #endregion
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("\\wwwroot\\Auth/\\"))
+    .SetApplicationName("MarketPlace")
+    .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
 
 #region authentication
 

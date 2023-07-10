@@ -35,7 +35,7 @@ namespace MarketPlace.Web.Areas.Store.Controllers
         [HttpGet("create-product")]
         public async Task<IActionResult> CreateProduct()
         {
-            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+            ViewBag.Categories = await _productService.GetAllActiveProductCategoriesForJsTree();
             return View();
         }
 
@@ -47,8 +47,15 @@ namespace MarketPlace.Web.Areas.Store.Controllers
                 var res = await _productService.CreateProduct(product, "", User.GetUserId()!.Value);
             }
 
-            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+            ViewBag.Categories = await _productService.GetAllActiveProductCategoriesForJsTree(); ;
             return View();
+        }
+
+
+        [HttpGet("get-product-categories")]
+        public async Task<IActionResult> GetProductCategories()
+        {
+            return JsonResult(JsonResultStatus.Success, "", await _productService.GetAllActiveProductCategoriesForJsTree());
         }
         #endregion
 

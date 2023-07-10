@@ -1,4 +1,5 @@
-﻿using MarketPlace.DataLayer.DTOs.Products;
+﻿using MarketPlace.DataLayer.DTOs.JsTree;
+using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.Products;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace MarketPlace.Application.Services.Interfaces
 
         Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId);
         Task<List<ProductCategory>> GetAllActiveProductCategories();
+
+        Task<List<JsTreeDTO>> GetAllActiveProductCategoriesForJsTree();
         #endregion
     }
 }
