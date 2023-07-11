@@ -42,7 +42,7 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form asp-area="Store" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data">
+                                        <form asp-area="Store" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" id="create_product_form">
                                             <label>نام محصول</label>
                                             <input asp-for="Title" />
                                             <span asp-validation-for="Title" class="text-danger"></span>
@@ -70,6 +70,42 @@
 
                                             <div class="m-2">
                                                 <div id="categories"></div>
+                                            </div>
+
+                                            <div class="d-flex flex-wrap mt-3">
+                                                <div class="col-5">
+                                                    <div class="form-group">
+                                                        <label>رنگ محصول</label>
+                                                        <input type="text" id="product_color_name_input" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div cite="form-group">
+                                                        <label>قیمت مضاف رنگ محصول</label>
+                                                        <input type="text" id="product_color_price_input" />
+                                                    </div>
+                                                </div>
+                                                <button type="button" onclick="addProductColor()"> افزودن رنگ</button>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                رنگ
+                                                            </th>
+                                                            <th scope="col">
+                                                                قیمت
+                                                            </th>
+                                                            <th scope="col">
+                                                                عملیات
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_colros">
+                                                    </tbody>
+                                                </table>
                                             </div>
 
 
@@ -105,7 +141,7 @@
 
 
                                             <div class="save_button primary_btn default_button">
-                                                <button type="submit">افزودن</button>
+                                                <button onclick="submitForm()" type="button">افزودن</button>
                                             </div>
                                         </form>
                                     </div>
@@ -121,12 +157,11 @@
 <!-- my account end   -->
 @section scripts{
     <partial name="_JqueryValidators" />
-    
+
     <script>
 
         $.get('@Url.Action("GetProductCategories","Product", new {area = "Store"})').then(function (res) {
-            debugger;
-            if (res.status == "Success"){
+            if (res.status == "Success") {
                 let data = res.data;
                 $("#categories").jstree(
                     {
@@ -141,5 +176,33 @@
                     })
             }
         });
+
+        function addProductColor() {
+            let productColorName = $("#product_color_name_input").val();
+            let productColorPrice = $("#product_color_price_input").val();
+
+            let rows = $("#list_of_product_colros tr").length;
+
+            $("#list_of_product_colros").append(`<tr><td>${productColorName}</td><td>${productColorPrice}</td><td></td></tr>`);
+
+            $("#create_product_form").append(`<input type="hidden" value="${productColorName}" name="productColors[${rows}].colorName" />`);
+            $("#create_product_form").append(`<input type="hidden" value="${productColorPrice}" name="productColors[${rows}].colorPrice" />`);
+        }
+
+
+        function submitForm(){
+            let checkedIds = $("#categories").jstree("get_checked", null, true);
+
+            //$("[productCategories]").each(function(index,item){
+            //    $("#create_product_form").removeChild(item);
+            //});
+
+            for(let i = 0; i<checkedIds.length;i++){
+                let checkedId = parseInt(checkedIds[i]);
+                $("#create_product_form").append(`<input type='hidden' name='productCategories[${i}]' value="${checkedId}"/>`)
+            }
+
+            $("#create_product_form").submit();
+        };
     </script>
 }

@@ -52,7 +52,7 @@ namespace MarketPlace.Web.Areas.Store.Controllers
         }
 
 
-        [HttpGet("get-product-categories")]
+        [HttpGet("get-product-categories")] 
         public async Task<IActionResult> GetProductCategories()
         {
             return JsonResult(JsonResultStatus.Success, "", await _productService.GetAllActiveProductCategoriesForJsTree());

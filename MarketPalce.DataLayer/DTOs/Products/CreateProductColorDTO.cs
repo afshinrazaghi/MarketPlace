@@ -18,6 +18,6 @@ namespace MarketPlace.DataLayer.DTOs.Products
 
         [Display(Name = "قیمت")]
         [Precision(18, 2)]
-        public decimal Price { get; set; }
+        public decimal ColorPrice { get; set; }
     }
 }
