@@ -108,33 +108,6 @@
                                                 </table>
                                             </div>
 
-
-
-
-
-                                            @* @if (categories != null && categories.Any())
-                                            {
-                                            <ul>
-                                            @foreach (var category in categories.Where(c => c.ParentId == null))
-                                            {
-                                            <li>
-                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(category.Id)" /> @category.Title
-                                            @if (categories.Any(subCategory => subCategory.ParentId == category.Id))
-                                            {
-                                            <ul class="ml-4">
-                                            @foreach (var subCategory in categories.Where(c => c.ParentId == category.Id))
-                                            {
-                                            <li >
-                                            <input name="@nameof(Model.ProductCategories)" type="checkbox" value="@(subCategory.Id)" /> @subCategory.Title
-                                            </li>
-                                            }
-                                            </ul>
-                                            }
-                                            </li>
-                                            }
-                                            </ul>
-                                            }*@
-
                                             <div class="col-md-9">
                                                 <input name="productImage" type="file" />
                                             </div>
@@ -181,23 +154,38 @@
             let productColorName = $("#product_color_name_input").val();
             let productColorPrice = $("#product_color_price_input").val();
 
-            let rows = $("#list_of_product_colros tr").length;
+            if (productColorName && productColorPrice) {
+                let index = $("#list_of_product_colros tr").length;
 
-            $("#list_of_product_colros").append(`<tr><td>${productColorName}</td><td>${productColorPrice}</td><td></td></tr>`);
+                $("#list_of_product_colros").append(`<tr product-color-row-index='${index}'><td>${productColorName}</td><td>${productColorPrice}</td><td><button type='button' onClick='removeProductColor(${index})' class='btn btn-danger m-0'><i class='fa fa-times'></i></button></td></tr>`);
 
-            $("#create_product_form").append(`<input type="hidden" value="${productColorName}" name="productColors[${rows}].colorName" />`);
-            $("#create_product_form").append(`<input type="hidden" value="${productColorPrice}" name="productColors[${rows}].colorPrice" />`);
+                $("#create_product_form").append(`<input type="hidden" product-color-input-index="${index}" value="${productColorName}" name="productColors[${index}].colorName" />`);
+                $("#create_product_form").append(`<input type="hidden" product-color-price-input-index="${index}" value="${productColorPrice}" name="productColors[${index}].colorPrice" />`);
+
+                $("#product_color_name_input").val(null);
+                $("#product_color_price_input").val(null);
+            }
+            else {
+                showMessage("اخطار", "مقادیر رنگ و قیمت مضاف به درستی وارد نشده اند",'warning');
+            }
+
+        }
+
+        function removeProductColor(index) {
+            $(`[product-color-row-index="${index}"]`).remove();
+            $(`[product-color-input-index="${index}"]`).remove();
+            $(`[product-color-price-input-index="${index}"]`).remove();
         }
 
 
-        function submitForm(){
+        function submitForm() {
             let checkedIds = $("#categories").jstree("get_checked", null, true);
 
             //$("[productCategories]").each(function(index,item){
             //    $("#create_product_form").removeChild(item);
             //});
 
-            for(let i = 0; i<checkedIds.length;i++){
+            for (let i = 0; i < checkedIds.length; i++) {
                 let checkedId = parseInt(checkedIds[i]);
                 $("#create_product_form").append(`<input type='hidden' name='productCategories[${i}]' value="${checkedId}"/>`)
             }
