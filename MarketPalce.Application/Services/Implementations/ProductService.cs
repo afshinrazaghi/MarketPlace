@@ -6,11 +6,13 @@ using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -20,13 +22,15 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<Product> _productRepository;
         private readonly IGenericRepository<ProductCategory> _productCategoryRepository;
         private readonly IGenericRepository<ProductSelectedCategory> _productSelectedCategoryRepository;
+        private readonly IGenericRepository<ProductColor> _productColorRepository;
         private readonly IMapper _mapper;
-        public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository, IGenericRepository<ProductSelectedCategory> productSelectedCategoryRepository, IMapper mapper)
+        public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository, IGenericRepository<ProductSelectedCategory> productSelectedCategoryRepository, IMapper mapper, IGenericRepository<ProductColor> productColorRepository)
         {
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
             _productSelectedCategoryRepository = productSelectedCategoryRepository;
             _mapper = mapper;
+            _productColorRepository = productColorRepository;
         }
         #endregion
 
@@ -76,19 +80,52 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<CreateProductResult> CreateProduct(CreateProductDTO product, string imageFileName, long storeId)
         {
-            //create product
-            var newProduct = _mapper.Map<Product>(product);
-            newProduct.ImageFileName = imageFileName;
-            newProduct.ProductStoreId = storeId;
-            await _productRepository.AddEntity(newProduct);
-            await _productRepository.SaveChanges();
+            using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                //create product
 
-            //create proudct categories
+                var productColors = product.ProductColors.ToList();
+                product.ProductColors.Clear();
+                var newProduct = _mapper.Map<Product>(product);
+                newProduct.ImageFileName = imageFileName;
+                newProduct.ProductStoreId = storeId;
+                await _productRepository.AddEntity(newProduct);
+                await _productRepository.SaveChanges();
 
 
-            //create product colors
+                //create product categories
+                List<ProductSelectedCategory> productSelectedCategories = new List<ProductSelectedCategory>();
+                foreach (var productCategory in product.ProductCategories)
+                {
+                    productSelectedCategories.Add(new ProductSelectedCategory
+                    {
+                        ProductCategoryId = productCategory,
+                        ProductId = newProduct.Id
+                    });
+                }
 
-            return CreateProductResult.Success;
+                await _productSelectedCategoryRepository.AddEntity(productSelectedCategories);
+                await _productSelectedCategoryRepository.SaveChanges();
+
+                //create product colors
+
+                List<ProductColor> productSelectedColors = new List<ProductColor>();
+                foreach (var productColor in productColors)
+                {
+                    productSelectedColors.Add(new ProductColor
+                    {
+                        ProductId = newProduct.Id,
+                        ColorName = productColor.ColorName,
+                        Price = productColor.ColorPrice
+                    });
+                }
+
+                await _productColorRepository.AddEntity(productSelectedColors);
+                await _productColorRepository.SaveChanges();
+                ts.Complete();
+
+                return CreateProductResult.Success;
+            }
         }
 
 

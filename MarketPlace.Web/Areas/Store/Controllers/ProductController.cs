@@ -1,4 +1,6 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using MarketPlace.Application.Extensions;
+using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utils;
 using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.Web.PresentationExtensions;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ namespace MarketPlace.Web.Areas.Store.Controllers
             if (store != null)
                 filter.StoreId = store.Id;
 
-            filter.FilterProductState = FilterProductState.Active;
+            filter.FilterProductState = FilterProductState.All;
             var products = await _productService.FilterProduct(filter);
             return View(products);
         }
@@ -33,9 +35,8 @@ namespace MarketPlace.Web.Areas.Store.Controllers
 
         #region create product
         [HttpGet("create-product")]
-        public async Task<IActionResult> CreateProduct()
+        public IActionResult CreateProduct()
         {
-            ViewBag.Categories = await _productService.GetAllActiveProductCategoriesForJsTree();
             return View();
         }
 
@@ -44,15 +45,33 @@ namespace MarketPlace.Web.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = await _productService.CreateProduct(product, "", User.GetUserId()!.Value);
+                if (productImage.IsImage())
+                {
+                    productImage.AddImageToServer(productImage.FileName, PathExtension.ProductImageOriginServer, null, null);
+                    var store = (await _storeService.GetLastActiveStoreByUserId(User.GetUserId()!.Value))!;
+                    var res = await _productService.CreateProduct(product, Path.Combine(PathExtension.ProductImageOriginServer, productImage.FileName), store.Id);
+                    switch (res)
+                    {
+                        case CreateProductResult.Success:
+                            TempData[SuccessMessage] = "محصول با موفقیت ایجاد شد";
+                            return RedirectToAction("Index");
+                        case CreateProductResult.Error:
+                            TempData[ErrorMessage] = "در ثبت محصول خطایی رخ داده است";
+                            break;
+                    }
+
+                }
+                else
+                {
+                    TempData[WarningMessage] = "لطفا تصویر محصول را انتخاب نمائید";
+                }
             }
 
-            ViewBag.Categories = await _productService.GetAllActiveProductCategoriesForJsTree(); ;
             return View();
         }
 
 
-        [HttpGet("get-product-categories")] 
+        [HttpGet("get-product-categories")]
         public async Task<IActionResult> GetProductCategories()
         {
             return JsonResult(JsonResultStatus.Success, "", await _productService.GetAllActiveProductCategoriesForJsTree());

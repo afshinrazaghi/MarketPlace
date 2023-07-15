@@ -27,6 +27,14 @@ namespace MarketPlace.DataLayer.Repository
             await _dbSet.AddAsync(entity);
         }
 
+        public async Task AddEntity(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+               await AddEntity(entity);
+            }
+        }
+
         public void DeleteEntity(TEntity entity)
         {
             entity.IsDelete = true;

@@ -47,6 +47,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
 
 	public enum FilterProductState
 	{
+		All,
 		UnderProgress,
 		Rejected,
 		Accepted,

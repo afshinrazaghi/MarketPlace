@@ -15,7 +15,6 @@ namespace MarketPlace.DataLayer.Entities.Products
         {
             Products = new HashSet<Product>();
             ProductSelectedCategories = new HashSet<ProductSelectedCategory>();
-            ProductCategoryParentProductCategories = new HashSet<ProductCategory>();
         }
         #region properties
 

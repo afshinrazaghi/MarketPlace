@@ -33,8 +33,7 @@ namespace MarketPlace.DataLayer.Entities.Products
 
         [Display(Name = "فروشگاه محصول")]
         public long ProductStoreId { get; set; }
-        [Display(Name = "دسته بندی محصول")]
-        public long ProductCategoryId { get; set; }
+       
         [Display(Name = "توضیحات کوتاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیش از  {1} کاراکتر باشد")]
@@ -57,8 +56,6 @@ namespace MarketPlace.DataLayer.Entities.Products
         #endregion
 
         #region relations
-        [ForeignKey(nameof(ProductCategoryId))]
-        public virtual ProductCategory ProductCategory { get; set; }
 
         [ForeignKey(nameof(ProductStoreId))]
         public virtual Store ProductStore { get; set; }

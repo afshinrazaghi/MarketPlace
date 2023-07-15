@@ -12,6 +12,11 @@ namespace MarketPlace.Web.Areas.Admin.Controllers
             var result = new JsonResult(new { status = type.ToString(), message = message, data = data });
             return result;
         }
+
+        protected const string SuccessMessage = "SuccessMessage";
+        protected const string InfoMessage = "InfoMessage";
+        protected const string WarningMessage = "WarningMessage";
+        protected const string ErrorMessage = "ErrorMessage";
     }
 
     public enum JsonResultStatus
